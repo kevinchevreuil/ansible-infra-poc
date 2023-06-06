@@ -51,7 +51,7 @@
 
 - name: Install the rsyslog certificate key
   ansible.builtin.template:
-    src: ../secrets/rsyslog.exo-industries.xyz.pem
+    src: ../secrets/rsyslog.exo-industries.xyz.key
     dest: /etc/ssl/private
     owner: root
     group: root
