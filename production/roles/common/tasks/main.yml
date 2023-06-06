@@ -57,3 +57,11 @@
     group: root
     mode: 0600
   notify: Restart rsyslog
+
+- name: Application of the resolv.conf file
+  ansible.builtin.template:
+    src: ../templates/resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
