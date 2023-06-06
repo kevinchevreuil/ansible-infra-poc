@@ -1,3 +1,6 @@
 - hosts: all
   roles:
     - common
+
+  handlers:
+    - import_tasks: ../production/roles/common/handlers/main.yml
