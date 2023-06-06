@@ -1,0 +1,58 @@
+---
+- hosts: all
+  tasks:
+    - name: Install the rsyslog configuration
+      ansible.builtin.apt:
+        pkg:
+        - rsyslog
+        - rsyslog-openssl
+        - rsyslog-gnutls
+        - rsyslog-relp
+        - chrony
+        - openssl
+        - ca-certificates
+
+    - name: Start the NTP server
+      ansible.builtin.service:
+        name: chrony
+        state: started
+        enabled: true
+
+    - name: Install the rsyslog client template
+      ansible.builtin.template:
+        src: ../templates/rsyslog.conf.j2
+        dest: ../templates/rsyslog.conf.j2
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart rsyslog
+
+    - name: Install the CA certificate
+      ansible.builtin.template:
+        src: ../secrets/ca.crt
+        dest: ../etc/ssl/certs
+        owner: root
+        group: root
+        mode: 0640
+      notify: Restart rsyslog
+
+    - name: Install the rsyslog client certificate
+      ansible.builtin.template:
+        src: ../secrets/rsyslog.exo-industries.xyz.crt
+        dest: ../etc/ssl/certs
+        owner: root
+        group: root
+        mode: 0640
+      notify: Restart rsyslog
+
+    - name: Install the rsyslog certificate key
+      ansible.builtin.template:
+        src: ../secrets/rsyslog.exo-industries.xyz.pem
+        dest: ../etc/ssl/private
+        owner: root
+        group: root
+        mode: 0600
+      notify: Restart rsyslog
+
+  handlers:
+    - import_tasks: ../handlers/main.yml
