@@ -17,12 +17,6 @@
     state: directory
     mode: '0755'
 
-- name: Create the var folder
-  ansible.builtin.file:
-    path: /var/lib/bind/var
-    state: directory
-    mode: '0755'
-
 - name: Create the run/named folder
   ansible.builtin.file:
     path: /var/lib/bind/var/run/named
@@ -34,6 +28,28 @@
     path: /var/lib/bind/var/cache/bind
     state: directory
     mode: '0755'
+
+- name: Create the null device file
+  ansible.builtin.command: mknod /var/lib/bind/dev/null c 1 3
+  register: root
+
+- name: Apply rights for the special null device file
+  ansible.builtin.file:
+    path: /var/lib/bind/dev/null
+    owner: root
+    group: root
+    mode: '0666'
+
+- name: Create the random device file
+  ansible.builtin.command: mknod /var/lib/bind/dev/random c 1 8
+  register: root
+
+- name: Apply rights for the special random device file
+  ansible.builtin.file:
+    path: /var/lib/bind/dev/random
+    owner: root
+    group: root
+    mode: '0666'
 
 - name: Installation of db.10.168.192.in-addr.arpa
   ansible.builtin.template:
