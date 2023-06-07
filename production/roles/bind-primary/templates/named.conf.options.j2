@@ -6,5 +6,6 @@ options {
 	allow-query { 192.168.10.0/24; };
 	allow-recursion { 192.168.10.0/24; };
 	allow-notify { 192.168.10.201; key dns1-dns2.; };
+	also-notify { 192.168.10.201; };
 	recursion yes;
 };
