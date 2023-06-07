@@ -5,6 +5,16 @@
     - bind9
     - bind9-utils
 
+- name: Installation of named.conf
+  ansible.builtin.template:
+    src: ../secrets/named.conf.j2
+    dest: /etc/bind/named.conf
+    owner: root
+    group: bind
+    mode: '0644'
+  notify:
+    - Restart bind9
+
 - name: Installation of db.10.168.192.in-addr.arpa
   ansible.builtin.template:
     src: ../templates/db.10.168.192.in-addr.arpa.j2
