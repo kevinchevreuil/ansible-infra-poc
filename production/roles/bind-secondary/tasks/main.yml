@@ -37,6 +37,14 @@
     group: bind
     mode: '0775'
 
+- name: Create the usr/share/dns folder
+  ansible.builtin.file:
+    path: /var/lib/bind/usr/share/dns
+    state: directory
+    owner: root
+    group: root
+    mode: '0775'
+
 - name: Create the null device file
   ansible.builtin.shell:
     cmd: mknod /var/lib/bind/dev/null c 1 3 -m 0666 2> /dev/null || true
