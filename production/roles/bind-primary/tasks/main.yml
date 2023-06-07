@@ -11,7 +11,7 @@
     state: directory
     owner: root
     group: bind
-    mode: '0750'
+    mode: '0755'
 
 - name: Create the etc folder
   ansible.builtin.file:
@@ -19,7 +19,7 @@
     state: directory
     owner: root
     group: bind
-    mode: '0750'
+    mode: '0755'
 
 - name: Create the run/named folder
   ansible.builtin.file:
@@ -27,7 +27,7 @@
     state: directory
     owner: root
     group: bind
-    mode: '0750'
+    mode: '0755'
 
 - name: Create the cache folder
   ansible.builtin.file:
@@ -35,7 +35,7 @@
     state: directory
     owner: root
     group: bind
-    mode: '0750'
+    mode: '0755'
 
 - name: Create the null device file
   ansible.builtin.shell: mknod /var/lib/bind/dev/null c 1 3 -m 0666 || true
