@@ -7,7 +7,7 @@
 
 - name: Installation of named.conf
   ansible.builtin.template:
-    src: ../secrets/named.conf.j2
+    src: ../templates/named.conf.j2
     dest: /etc/bind/named.conf
     owner: root
     group: bind
