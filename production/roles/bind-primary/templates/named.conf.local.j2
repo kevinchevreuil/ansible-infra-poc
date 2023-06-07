@@ -7,3 +7,12 @@ zone "10.168.192.in-addr.arpa" {
         type master;
         file "/etc/bind/db.10.168.192.in-addr.arpa";
 };
+
+key "dns1-dns2." {
+	algorithm hmac-sha256;
+	secret "+e0gPEElNtWpMVN/p9XiWpLNh278pHziErSfsJ80JmI=";
+};
+
+server 192.168.10.201 {
+    keys { dns1-dns2. ;};
+};

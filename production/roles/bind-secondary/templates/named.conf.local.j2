@@ -9,3 +9,12 @@ zone "10.168.192.in-addr.arpa" {
         file "/var/cache/bind/db.10.168.192.in-addr.arpa";
 	masters { 192.168.10.200; };
 };
+
+key "dns1-dns2." {
+	algorithm hmac-sha256;
+	secret "+e0gPEElNtWpMVN/p9XiWpLNh278pHziErSfsJ80JmI=";
+};
+
+server 192.168.10.200 {
+    keys { dns1-dns2. ;};
+};
