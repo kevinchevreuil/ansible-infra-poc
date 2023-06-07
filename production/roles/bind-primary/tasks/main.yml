@@ -95,11 +95,12 @@
 
 - name: Copy all files in the chroot directory
   ansible.builtin.copy:
-    src: /etc/bind/*
+    src: "{{ item }}"
     dest: /var/lib/bind/etc/bind/
     owner: root
     group: bind
     mode: '0640'
-    executable: /bin/bash
+  with_fileglob:
+    - /etc/bind/*
   notify:
     - Restart bind9
