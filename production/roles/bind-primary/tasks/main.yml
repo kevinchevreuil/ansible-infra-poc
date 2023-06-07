@@ -5,6 +5,36 @@
     - bind9
     - bind9-utils
 
+- name: Create the dev folder
+  ansible.builtin.file:
+    path: /var/lib/bind/dev
+    state: directory
+    mode: '0755'
+
+- name: Create the etc folder
+  ansible.builtin.file:
+    path: /var/lib/bind/etc
+    state: directory
+    mode: '0755'
+
+- name: Create the var folder
+  ansible.builtin.file:
+    path: /var/lib/bind/var
+    state: directory
+    mode: '0755'
+
+- name: Create the run/named folder
+  ansible.builtin.file:
+    path: /var/lib/bind/var/run/named
+    state: directory
+    mode: '0755'
+
+- name: Create the cache folder
+  ansible.builtin.file:
+    path: /var/lib/bind/var/cache/bind
+    state: directory
+    mode: '0755'
+
 - name: Installation of db.10.168.192.in-addr.arpa
   ansible.builtin.template:
     src: ../templates/db.10.168.192.in-addr.arpa.j2
