@@ -1,0 +1,15 @@
+---
+- name: Installation of isc-dhcp-server
+  ansible.builtin.apt:
+    pkg:
+    - isc-dhcp-server
+
+- name: Installation of dhcpd.conf
+  ansible.builtin.template:
+    src: ../templates/dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart isc-dhcp-server
