@@ -9,25 +9,33 @@
   ansible.builtin.file:
     path: /var/lib/bind/dev
     state: directory
-    mode: '0755'
+    owner: root
+    group: bind
+    mode: '0750'
 
 - name: Create the etc folder
   ansible.builtin.file:
     path: /var/lib/bind/etc
     state: directory
-    mode: '0755'
+    owner: root
+    group: bind
+    mode: '0750'
 
 - name: Create the run/named folder
   ansible.builtin.file:
     path: /var/lib/bind/var/run/named
     state: directory
-    mode: '0755'
+    owner: root
+    group: bind
+    mode: '0750'
 
 - name: Create the cache folder
   ansible.builtin.file:
     path: /var/lib/bind/var/cache/bind
     state: directory
-    mode: '0755'
+    owner: root
+    group: bind
+    mode: '0750'
 
 - name: Create the null device file
   ansible.builtin.command: mknod /var/lib/bind/dev/null c 1 3
@@ -54,47 +62,57 @@
 - name: Installation of db.10.168.192.in-addr.arpa
   ansible.builtin.template:
     src: ../templates/db.10.168.192.in-addr.arpa.j2
-    dest: /etc/bind/db.10.168.192.in-addr.arpa
+    dest: /var/lib/bind/etc/bind/db.10.168.192.in-addr.arpa
     owner: root
     group: bind
-    mode: '0644'
+    mode: '0640'
   notify:
     - Restart bind9
 
 - name: Installation of db.exo-industries.xyz
   ansible.builtin.template:
     src: ../templates/db.exo-industries.xyz.j2
-    dest: /etc/bind/db.exo-industries.xyz
+    dest: /var/lib/bind/etc/bind/db.exo-industries.xyz
     owner: root
     group: bind
-    mode: '0644'
+    mode: '0640'
   notify:
     - Restart bind9
 
 - name: Installation of named.conf.local
   ansible.builtin.template:
     src: ../secrets/named.conf.local.j2
-    dest: /etc/bind/named.conf.local
+    dest: /var/lib/bind/etc/bind/named.conf.local
     owner: root
     group: bind
-    mode: '0644'
+    mode: '0640'
   notify:
     - Restart bind9
 
 - name: Installation of named.conf.options
   ansible.builtin.template:
     src: ../templates/named.conf.options.j2
-    dest: /etc/bind/named.conf.options
+    dest: /var/lib/bind/etc/bind/named.conf.options
     owner: root
     group: bind
-    mode: '0644'
+    mode: '0640'
   notify:
     - Restart bind9
 
 - name: Installation of TSIG key
   ansible.builtin.template:
     src: ../secrets/dns1-dns2.key
-    dest: /etc/bind/
+    dest: /var/lib/bind/etc/bind/
+    owner: root
+    group: bind
+    mode: '0640'
+  notify:
+    - Restart bind9
+
+- name: Copy all files in the chroot directory
+  ansible.builtin.copy:
+    src: /etc/bind/*
+    dest: /var/lib/bind/etc/bind/
     owner: root
     group: bind
     mode: '0640'
