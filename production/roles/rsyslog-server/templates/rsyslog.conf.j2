@@ -13,25 +13,36 @@ module(load="imklog")   # provides kernel logging support
 #module(load="immark")  # provides --MARK-- message capability
 
 # provides UDP syslog reception
-#module(load="imudp")
-#input(type="imudp" port="514")
+module(load="imrelp" tls.tlslib="openssl")
+input(type="imrelp" port="514" tls="on"
+tls.caCert="/etc/ssl/certs/ca.crt"
+tls.myCert="/etc/ssl/certs/rsyslog.exo-industries.xyz.crt"
+tls.myPrivKey="/etc/ssl/private/rsyslog.exo-industries.xyz.key"
+tls.authmode="certvalid"
+)
 
 # provides TCP syslog reception
 #module(load="imtcp")
 #input(type="imtcp" port="514")
 
-module(load="omrelp" tls.tlslib="openssl")
-action(type="omrelp"
-             target="192.168.10.204" port="514" tls="on"
-             tls.cacert="/etc/ssl/certs/ca.crt"
-             tls.mycert="/etc/ssl/certs/rsyslog.exo-industries.xyz.crt"
-             tls.myprivkey="/etc/ssl/private/rsyslog.exo-industries.xyz.key"
-             tls.authmode="certvalid"
-             tls.permittedpeer="rsyslog")
+###########################
+#### EXO INDUSTRIES ####
+###########################
+
+$DefaultNetstreamDriver gtls
+$DefaultNetstreamDriverCAFile /etc/ssl/certs/ca.crt
+$DefaultNetstreamDriverCertFile /etc/ssl/certs/rsyslog.exo-industries.xyz.crt
+$DefaultNetstreamDriverKeyFile /etc/ssl/private/rsyslog.exo-industries.xyz.key
 
 ###########################
 #### GLOBAL DIRECTIVES ####
 ###########################
+
+#
+# Use traditional timestamp format.
+# To enable high precision timestamps, comment out the following line.
+#
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 
 #
 # Set the default permissions for all log files.
@@ -58,18 +69,35 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 ###############
 
 #
-# Log anything besides private authentication messages to a single log file
-#
-*.*;auth,authpriv.none		-/var/log/syslog
-
-#
-# Log commonly used facilities to their own log file
+# First some standard log files.  Log by facility.
 #
 auth,authpriv.*			/var/log/auth.log
-cron.*				-/var/log/cron.log
+*.*;auth,authpriv.none		-/var/log/syslog
+#cron.*				/var/log/cron.log
+daemon.*			-/var/log/daemon.log
 kern.*				-/var/log/kern.log
+lpr.*				-/var/log/lpr.log
 mail.*				-/var/log/mail.log
 user.*				-/var/log/user.log
+
+#
+# Logging for the mail system.  Split it up so that
+# it is easy to write scripts to parse these files.
+#
+mail.info			-/var/log/mail.info
+mail.warn			-/var/log/mail.warn
+mail.err			/var/log/mail.err
+
+#
+# Some "catch-all" log files.
+#
+*.=debug;\
+	auth,authpriv.none;\
+	mail.none		-/var/log/debug
+*.=info;*.=notice;*.=warn;\
+	auth,authpriv.none;\
+	cron,daemon.none;\
+	mail.none		-/var/log/messages
 
 #
 # Emergencies are sent to everybody logged in.
