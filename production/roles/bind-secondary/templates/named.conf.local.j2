@@ -1,0 +1,11 @@
+zone "exo-industries.xyz" {
+	type slave;
+	file "/var/cache/bind/db.exo-industries.xyz";
+	masters { 192.168.10.200; };
+};
+
+zone "10.168.192.in-addr.arpa" {
+        type slave;
+        file "/var/cache/bind/db.10.168.192.in-addr.arpa";
+	masters { 192.168.10.200; };
+};
