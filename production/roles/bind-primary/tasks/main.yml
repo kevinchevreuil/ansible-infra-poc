@@ -43,7 +43,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0775'
+    mode: '0755'
 
 - name: Create the null device file
   ansible.builtin.shell:
