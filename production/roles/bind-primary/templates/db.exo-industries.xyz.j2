@@ -1,6 +1,6 @@
 $TTL	604800
 @	IN	SOA	exo-industries.xyz. admin.exo-industries.xyz. (
-			2023060602	; Serial
+			2023060701	; Serial
 			 604800		; Refresh
 			  86400		; Retry
 			2419200		; Expire
@@ -8,4 +8,7 @@ $TTL	604800
 ;
 @		IN	NS	exo-industries.xyz.
 @		IN	A	192.168.10.200
+@		IN	A	192.168.10.201
+dhcp-master	IN	A	192.128.10.202
+dhcp-slave	IN	A	192.168.10.203
 rsyslog		IN	A	192.168.10.204
