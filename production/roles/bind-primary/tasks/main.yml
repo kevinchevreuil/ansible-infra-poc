@@ -15,7 +15,7 @@
 
 - name: Create the etc folder
   ansible.builtin.file:
-    path: /var/lib/bind/etc
+    path: /var/lib/bind/etc/bind
     state: directory
     owner: root
     group: bind
