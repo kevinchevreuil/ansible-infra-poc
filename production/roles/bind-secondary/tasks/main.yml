@@ -7,7 +7,7 @@
 
 - name: Installation of named.conf.local
   ansible.builtin.template:
-    src: ../templates/named.conf.local.j2
+    src: ../secrets/named.conf.local.j2
     dest: /etc/bind/named.conf.local
     owner: root
     group: bind
@@ -27,7 +27,7 @@
 
 - name: Installation of TSIG key
   ansible.builtin.template:
-    src: ../templates/dns1-dns2.key.j2
+    src: ../secrets/dns1-dns2.key.j2
     dest: /etc/bind/
     owner: root
     group: bind
