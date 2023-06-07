@@ -43,6 +43,16 @@
 - name: Create the random device file
   ansible.builtin.shell: mknod /var/lib/bind/dev/random c 1 8 -m 0666 || true
 
+- name: Installation of named daemon settings file
+  ansible.builtin.template:
+    src: ../templates/named.j2
+    dest: /etc/default/named
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart bind9
+
 - name: Installation of db.10.168.192.in-addr.arpa
   ansible.builtin.template:
     src: ../templates/db.10.168.192.in-addr.arpa.j2
