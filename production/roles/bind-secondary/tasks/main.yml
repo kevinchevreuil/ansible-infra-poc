@@ -27,7 +27,7 @@
 
 - name: Installation of TSIG key
   ansible.builtin.template:
-    src: ../secrets/dns1-dns2.key.j2
+    src: ../secrets/dns1-dns2.key
     dest: /etc/bind/
     owner: root
     group: bind
