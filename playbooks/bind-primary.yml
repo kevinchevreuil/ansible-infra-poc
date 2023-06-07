@@ -1,0 +1,3 @@
+- hosts: bind-primary
+  roles:
+    - bind-primary

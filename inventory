@@ -1,7 +1,7 @@
-[all]
-192.168.10.21
+[rsyslog-server]
+192.168.10.204
 
-[dns]
+[bind-primary]
 192.168.10.200
 
 [dhcp]
