@@ -39,7 +39,7 @@
 
 - name: Create the null device file
   ansible.builtin.command:
-    cmd: mknod /var/lib/bind/dev/null c 1 3
+    cmd: mknod /var/lib/bind/dev/null c 1 3 2> /dev/null || true
 
 - name: Apply rights for the special null device file
   ansible.builtin.file:
@@ -50,7 +50,7 @@
 
 - name: Create the random device file
   ansible.builtin.command:
-    cmd: mknod /var/lib/bind/dev/random c 1 8
+    cmd: mknod /var/lib/bind/dev/random c 1 8 2> /dev/null || true
 
 - name: Apply rights for the special random device file
   ansible.builtin.file:
