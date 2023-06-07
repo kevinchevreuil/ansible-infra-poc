@@ -129,6 +129,6 @@
     remote_src: yes
     owner: root
     group: root
-    mode: '0644'
+    mode: '0755'
   notify:
     - Restart bind9
