@@ -35,6 +35,14 @@
     state: directory
     owner: root
     group: bind
+    mode: '0775'
+
+- name: Create the usr/share/dns folder
+  ansible.builtin.file:
+    path: /var/lib/bind/usr/share/dns
+    state: directory
+    owner: root
+    group: bind
     mode: '0755'
 
 - name: Create the null device file
@@ -111,5 +119,16 @@
     owner: root
     group: bind
     mode: '0640'
+  notify:
+    - Restart bind9
+
+- name: Copy the root.hints in the chroot directory
+  ansible.builtin.copy:
+    src: /usr/share/dns/
+    dest: /var/lib/bind/usr/share/dns
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0644'
   notify:
     - Restart bind9
