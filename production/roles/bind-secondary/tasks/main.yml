@@ -37,19 +37,13 @@
     group: bind
     mode: '0775'
 
-- name: Create the usr/share/dns folder
-  ansible.builtin.file:
-    path: /var/lib/bind/usr/share/dns
-    state: directory
-    owner: root
-    group: bind
-    mode: '0755'
-
 - name: Create the null device file
-  ansible.builtin.shell: mknod /var/lib/bind/dev/null c 1 3 -m 0666 || true
+  ansible.builtin.shell:
+    cmd: mknod /var/lib/bind/dev/null c 1 3 -m 0666 2> /dev/null || true
 
 - name: Create the random device file
-  ansible.builtin.shell: mknod /var/lib/bind/dev/random c 1 8 -m 0666 || true
+  ansible.builtin.shell:
+    cmd: mknod /var/lib/bind/dev/random c 1 8 -m 0666 2> /dev/null || true
 
 - name: Installation of named daemon settings file
   ansible.builtin.template:
@@ -110,3 +104,5 @@
     owner: root
     group: root
     mode: '0755'
+  notify:
+    - Restart bind9
