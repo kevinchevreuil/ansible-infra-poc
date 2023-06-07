@@ -100,5 +100,6 @@
     owner: root
     group: bind
     mode: '0640'
+    executable: /bin/bash
   notify:
     - Restart bind9
