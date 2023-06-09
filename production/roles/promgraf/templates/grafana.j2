@@ -1,0 +1,21 @@
+server {
+        listen 80;
+	server_name grafana.exo-industries.xyz;
+
+        location / {
+		return 301 https://grafana.exo-industries.xyz;
+	}
+}
+
+server {
+	listen 443 ssl;
+	server_name grafana.exo-industries.xyz;
+	root /var/lib/grafana;
+
+	ssl_certificate /etc/ssl/certs/grafana.exo-industries.xyz.crt;
+	ssl_certificate_key /etc/ssl/private/grafana.exo-industries.xyz.key;
+
+	        location / {
+			proxy_pass http://127.0.0.1:3000;                
+		}
+}

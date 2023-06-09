@@ -1,0 +1,121 @@
+---
+- hosts: monitoring
+  tasks:
+    - name: Installation of required packages
+      ansible.builtin.apt:
+        pkg:
+        - gnupg2
+        - ca-certificates
+
+    - name: Installation of the Grafana stable repository GPG key
+      ansible.builtin.get_url:
+        url: https://apt.grafana.com/gpg.key
+        dest: "/usr/share/keyrings/grafana.key"
+
+    - name: Installation of the Grafana stable repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main"
+        state: present
+
+    - name: Installation of the monitoring stack
+      ansible.builtin.apt:
+        pkg:
+        - prometheus
+        - prometheus-node-exporter
+        - grafana
+        - nginx
+
+    - name: Start and enable the prometheus service
+      ansible.builtin.service:
+        name: prometheus
+        state: started
+        enabled: true
+
+    - name: Start and enable the grafana service
+      ansible.builtin.service:
+        name: grafana-server
+        state: started
+        enabled: true
+
+    - name: "Add the TLS cert for prometheus"
+      ansible.builtin.template:
+        src: "../secrets/prometheus.ipssi.lan.crt"
+        dest: "/etc/ssl/certs/prometheus.ipssi.lan.crt"
+        owner: "root"
+        group: "root"
+        mode: 0640
+      notify:
+        - Restart nginx
+
+    - name: "Add the TLS key for prometheus"
+      ansible.builtin.template:
+        src: "../secrets/prometheus.ipssi.lan.key"
+        dest: "/etc/ssl/private/prometheus.ipssi.lan.key"
+        owner: "root"
+        group: "root"
+        mode: 0600
+      notify:
+        - Restart nginx
+
+    - name: "Add the nginx prometheus virtualhost"
+      ansible.builtin.template:
+        src: "../templates/prometheus.j2"
+        dest: "/etc/nginx/sites-available/prometheus"
+        owner: "root"
+        group: "root"
+        mode: 0644
+
+    - name: "Enable prometheus"
+      ansible.builtin.file:
+        src: "/etc/nginx/sites-available/prometheus"
+        dest: "/etc/nginx/sites-enabled/prometheus"
+        owner: "root"
+        group: "root"
+        state: "link"
+      notify:
+        - Reload nginx
+
+    - name: "Add the TLS cert for grafana"
+      ansible.builtin.template:
+        src: "../secrets/grafana.ipssi.lan.crt"
+        dest: "/etc/ssl/certs/grafana.ipssi.lan.crt"
+        owner: "root"
+        group: "root"
+        mode: 0640
+      notify:
+        - Restart nginx
+
+    - name: "Add the TLS key for grafana"
+      ansible.builtin.template:
+        src: "../secrets/grafana.ipssi.lan.key"
+        dest: "/etc/ssl/private/grafana.ipssi.lan.key"
+        owner: "root"
+        group: "root"
+        mode: 0600
+      notify:
+        - Restart nginx
+
+    - name: "Add the nginx grafana virtualhost"
+      ansible.builtin.template:
+        src: "../templates/grafana.j2"
+        dest: "/etc/nginx/sites-available/grafana"
+        owner: "root"
+        group: "root"
+        mode: 0644
+
+    - name: "Enable grafana"
+      ansible.builtin.file:
+        src: "/etc/nginx/sites-available/grafana"
+        dest: "/etc/nginx/sites-enabled/grafana"
+        owner: "root"
+        group: "root"
+        state: "link"
+      notify:
+        - Reload nginx
+
+    - name: "Disable the default vhost"
+      ansible.builtin.file:
+        path: "/etc/nginx/sites-enabled/default"
+        state: absent
+      notify:
+        - Reload nginx
