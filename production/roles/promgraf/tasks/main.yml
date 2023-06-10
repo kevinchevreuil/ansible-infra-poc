@@ -37,8 +37,8 @@
 
 - name: "Add the TLS cert for prometheus"
   ansible.builtin.template:
-    src: "../secrets/prometheus.ipssi.lan.crt"
-    dest: "/etc/ssl/certs/prometheus.ipssi.lan.crt"
+    src: "../secrets/prometheus.exo-industries.xyz.crt"
+    dest: "/etc/ssl/certs/prometheus.exo-industries.xyz.crt"
     owner: "root"
     group: "root"
     mode: 0640
@@ -47,8 +47,8 @@
 
 - name: "Add the TLS key for prometheus"
   ansible.builtin.template:
-    src: "../secrets/prometheus.ipssi.lan.key"
-    dest: "/etc/ssl/private/prometheus.ipssi.lan.key"
+    src: "../secrets/prometheus.exo-industries.xyz.key"
+    dest: "/etc/ssl/private/prometheus.exo-industries.xyz.key"
     owner: "root"
     group: "root"
     mode: 0600
@@ -75,8 +75,8 @@
 
 - name: "Add the TLS cert for grafana"
   ansible.builtin.template:
-    src: "../secrets/grafana.ipssi.lan.crt"
-    dest: "/etc/ssl/certs/grafana.ipssi.lan.crt"
+    src: "../secrets/grafana.exo-industries.xyz.crt"
+    dest: "/etc/ssl/certs/grafana.exo-industries.xyz.crt"
     owner: "root"
     group: "root"
     mode: 0640
@@ -85,8 +85,8 @@
 
 - name: "Add the TLS key for grafana"
   ansible.builtin.template:
-    src: "../secrets/grafana.ipssi.lan.key"
-    dest: "/etc/ssl/private/grafana.ipssi.lan.key"
+    src: "../secrets/grafana.exo-industries.xyz.key"
+    dest: "/etc/ssl/private/grafana.exo-industries.xyz.key"
     owner: "root"
     group: "root"
     mode: 0600
