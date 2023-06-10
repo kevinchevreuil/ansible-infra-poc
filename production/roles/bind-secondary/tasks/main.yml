@@ -1,9 +1,10 @@
 ---
-- name: Installation of bind9
+- name: Installation of bind9 and prometheus-bind-exporter
   ansible.builtin.apt:
     pkg:
     - bind9
     - bind9-utils
+    - prometheus-bind-exporter
 
 - name: Create the dev folder
   ansible.builtin.file:

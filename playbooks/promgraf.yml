@@ -1,0 +1,3 @@
+- hosts: promgraf
+  roles:
+    - promgraf
