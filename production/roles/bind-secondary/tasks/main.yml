@@ -97,13 +97,9 @@
     - Restart bind9
 
 - name: Copy all files in the chroot directory
-  ansible.builtin.copy:
-    src: /etc/bind/
-    dest: /var/lib/bind/etc/bind/
-    remote_src: yes
-    owner: root
-    group: bind
-    mode: '0755'
+  ansible.builtin.command: cp -aprf /etc/bind/ /var/lib/bind/etc/bind/
+  args:
+    creates: /var/lib/bind/etc/bind/
   notify:
     - Restart bind9
 
