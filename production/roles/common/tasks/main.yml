@@ -25,7 +25,7 @@
     enabled: true
 
 - name: Install the rsyslog client template
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: ../templates/rsyslog.conf.j2
     dest: /etc/rsyslog.conf
     owner: root
@@ -34,7 +34,7 @@
   notify: Restart rsyslog
 
 - name: Install the CA certificate
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: ../secrets/ca.crt
     dest: /etc/ssl/certs
     owner: root
@@ -43,7 +43,7 @@
   notify: Restart rsyslog
 
 - name: Install the rsyslog client certificate
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: ../secrets/rsyslog.exo-industries.xyz.crt
     dest: /etc/ssl/certs
     owner: root
@@ -52,7 +52,7 @@
   notify: Restart rsyslog
 
 - name: Install the rsyslog certificate key
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: ../secrets/rsyslog.exo-industries.xyz.key
     dest: /etc/ssl/private
     owner: root
@@ -60,8 +60,16 @@
     mode: 0600
   notify: Restart rsyslog
 
+- name: Installation of default APT settings
+  ansible.builtin.copy:
+    src: ../secrets/9999confold
+    dest: /etc/apt/apt.conf.d/
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Application of the resolv.conf file
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: ../templates/resolv.conf.j2
     dest: /etc/resolv.conf
     owner: root
