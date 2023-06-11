@@ -47,7 +47,7 @@
 
 - name: "Add the default file for Prometheus"
   ansible.builtin.copy:
-    src: "../secrets/default.j2"
+    src: "../templates/default.j2"
     dest: "/etc/default/prometheus"
     owner: "root"
     group: "root"
