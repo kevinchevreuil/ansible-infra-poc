@@ -29,6 +29,7 @@
     - php-bz2
     - php-zip
     - php-mbstring
+    - php-xml
 
 - name: Start and enable the php-fpm service
   ansible.builtin.service:
