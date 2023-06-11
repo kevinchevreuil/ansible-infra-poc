@@ -8,3 +8,4 @@
   ansible.builtin.unarchive:
     src: /srv/glpi-{{ glpi_version }}.tgz
     dest: /srv/glpi
+    remote_src: yes
