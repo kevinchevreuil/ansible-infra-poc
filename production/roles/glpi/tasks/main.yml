@@ -7,5 +7,5 @@
 - name: Extract glpi.tgz into /srv/glpi
   ansible.builtin.unarchive:
     src: /srv/glpi-{{ glpi_version }}.tgz
-    dest: /srv/glpi
+    dest: /srv/
     remote_src: yes
