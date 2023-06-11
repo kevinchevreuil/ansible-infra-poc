@@ -3,3 +3,4 @@
     - glpi
   vars:
     glpi_version: 10.0.7
+    php_version: 8.2
