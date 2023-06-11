@@ -11,6 +11,17 @@
     remote_src: true
     extra_opts:
     - --keep-old-files
+    - --keep-directory-symlink
+    - -no-overwrite-dir
+
+- name: Change ownership of the directory
+  ansible.builtin.file:
+    path: /srv/glpi
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+    mode: "0755"
 
 - name: Installation of required packages
   ansible.builtin.apt:
