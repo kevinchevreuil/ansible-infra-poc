@@ -16,6 +16,7 @@
 - name: Installation of required packages
   ansible.builtin.apt:
     pkg:
+    - python3-mysqldb
     - mariadb-server
     - php-fpm
     - php-common
@@ -105,12 +106,12 @@
 
 - name: Create the database
   mysql_db:
-    name: {{ glpi_db }}
+    name: "{{ glpi_db }}"
     state: present
 
 - name: Create database user and password with all database privileges
   mysql_user:
-    name: {{ glpi_dbuser }}
-    password: {{ glpi_dbpasswd }}
+    name: "{{ glpi_dbuser }}"
+    password: "{{ glpi_dbpasswd }}"
     priv: '*.*:ALL'
     state: present
