@@ -8,7 +8,7 @@
   ansible.builtin.unarchive:
     src: /tmp/glpi-{{ glpi_version }}.tgz
     dest: /srv/
-    remote_src: yes
+    remote_src: true
     extra_opts:
     - --keep-old-files
 
@@ -36,7 +36,7 @@
     dest: /etc/nginx/sites-available/glpi
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Activation of the GLPI website
   ansible.builtin.file:
@@ -53,7 +53,7 @@
     dest: /etc/ssl/certs/glpi.exo-industries.xyz.crt
     owner: root
     group: root
-    mode: 0640
+    mode: "0640"
   notify:
     - Restart nginx
 
@@ -63,6 +63,6 @@
     dest: /etc/ssl/private/glpi.exo-industries.xyz.key
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   notify:
     - Restart nginx
