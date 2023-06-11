@@ -9,12 +9,6 @@
     src: /tmp/glpi-{{ glpi_version }}.tgz
     dest: /srv/
     remote_src: true
-
-- name: Change ownership of the directory
-  ansible.builtin.file:
-    path: /srv/glpi
-    state: directory
-    recurse: yes
     owner: www-data
     group: www-data
     mode: "0755"
