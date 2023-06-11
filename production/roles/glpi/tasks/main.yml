@@ -2,10 +2,53 @@
 - name: Download the GLPI latest release
   ansible.builtin.get_url:
     url: https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz
-    dest: "/srv/"
+    dest: /tmp
 
 - name: Extract glpi.tgz into /srv/glpi
   ansible.builtin.unarchive:
-    src: /srv/glpi-{{ glpi_version }}.tgz
+    src: /tmp/glpi-{{ glpi_version }}.tgz
     dest: /srv/
     remote_src: yes
+
+- name: Installation of required packages
+  ansible.builtin.apt:
+    pkg:
+    - mariadb-server
+    - php-fpm
+
+- name: Installation of the glpi configuration
+  ansible.builtin.template:
+    src: ../templates/glpi.j2
+    dest: /etc/nginx/sites/available
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Activation of the GLPI website
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/glpi
+    dest: /etc/nginx/sites-enabled
+    owner: root
+    group: root
+    state: link
+  notify: Reload nginx
+
+- name: Add the TLS cert for GLPI
+  ansible.builtin.copy:
+    src: ../secrets/glpi.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/glpi.exo-industries.xyz.crt
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - Restart nginx
+
+- name: Add the TLS key for GLPI
+  ansible.builtin.copy:
+    src: ../secrets/glpi.exo-industries.xyz.key
+    dest: /etc/ssl/private/glpi.exo-industries.xyz.key
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - Restart nginx
