@@ -9,6 +9,8 @@
     src: /tmp/glpi-{{ glpi_version }}.tgz
     dest: /srv/
     remote_src: yes
+    extra_opts:
+    - --keep-old-files
 
 - name: Installation of required packages
   ansible.builtin.apt:
@@ -39,7 +41,7 @@
 - name: Activation of the GLPI website
   ansible.builtin.file:
     src: /etc/nginx/sites-available/glpi
-    dest: /etc/nginx/sites-enabled
+    dest: /etc/nginx/sites-enabled/glpi
     owner: root
     group: root
     state: link
