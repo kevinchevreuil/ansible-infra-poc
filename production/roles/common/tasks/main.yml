@@ -62,7 +62,7 @@
 
 - name: Installation of default APT settings
   ansible.builtin.copy:
-    src: ../secrets/9999confold
+    src: ../templates/9999confold
     dest: /etc/apt/apt.conf.d/
     owner: root
     group: root
