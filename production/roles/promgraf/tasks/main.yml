@@ -21,7 +21,6 @@
     - prometheus
     - prometheus-node-exporter
     - grafana
-    - nginx
 
 - name: Start and enable the prometheus service
   ansible.builtin.service:
@@ -47,7 +46,7 @@
 
 - name: "Add the default file for Prometheus"
   ansible.builtin.copy:
-    src: "../templates/default.j2"
+    src: "../templates/default-prometheus.j2"
     dest: "/etc/default/prometheus"
     owner: "root"
     group: "root"
@@ -128,12 +127,5 @@
     owner: "root"
     group: "root"
     state: "link"
-  notify:
-    - Reload nginx
-
-- name: "Disable the default vhost"
-  ansible.builtin.file:
-    path: "/etc/nginx/sites-enabled/default"
-    state: absent
   notify:
     - Reload nginx

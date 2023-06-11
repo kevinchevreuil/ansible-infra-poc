@@ -1,0 +1,20 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    pkg: nginx
+
+- name: Disable the default vhost
+  ansible.builtin.file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+  notify:
+    - Reload nginx
+
+- name: Install the default nginx configuration
+  ansible.builtin.copy:
+    src: ../templates/nginx.conf.j2
+    dest: /etc/nginx
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart nginx

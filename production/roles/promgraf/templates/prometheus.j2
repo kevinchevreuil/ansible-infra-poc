@@ -8,7 +8,7 @@ server {
 }
 
 server {
-	listen 443 ssl;
+	listen 443 ssl http2;
 	server_name prometheus.exo-industries.xyz;
 
 	ssl_certificate /etc/ssl/certs/prometheus.exo-industries.xyz.crt;
