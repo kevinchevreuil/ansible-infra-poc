@@ -18,6 +18,22 @@
     pkg:
     - mariadb-server
     - php-fpm
+    - php-common
+    - php-mysql
+    - php-json
+    - php-curl
+    - php-gd
+    - php-intl
+    - php-ldap
+    - php-bz2
+    - php-zip
+    - php-mbstring
+
+- name: Hardening of GLPI permissions
+  ansible.builin.file:
+    path: /srv/glpi/public
+    state: directory
+    mode: '0750'
 
 - name: Start and enable the php-fpm service
   ansible.builtin.service:
@@ -68,3 +84,14 @@
     mode: "0600"
   notify:
     - Restart nginx
+
+- name: Add the hardening php.ini file
+  ansible.builtin.copy:
+    src: ../templates/php.ini.j2
+    dest: /etc/php/{{ php_version }}/fpm/php.ini
+    dest: /etc/php/{{ php_version }}/cli/php.ini
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart php-fpm
