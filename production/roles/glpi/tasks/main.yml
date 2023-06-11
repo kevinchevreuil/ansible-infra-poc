@@ -87,11 +87,11 @@
 
 - name: Add the hardening php.ini file
   ansible.builtin.copy:
+    src: ../templates/php.ini.j2
+    dest: /etc/php/{{ php_version }}/fpm/php.ini
+    dest: /etc/php/{{ php_version }}/cli/php.ini
     owner: root
     group: root
     mode: "0644"
-  with_items:
-   - { src: ../templates/php.ini.j2, dest: /etc/php/{{ php_version }}/cli/}
-   - { src: ../templates/php.ini.j2, dest: /etc/php/{{ php_version }}/fpm/}
   notify:
     - Restart php-fpm
