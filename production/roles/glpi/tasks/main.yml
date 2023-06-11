@@ -1,4 +1,4 @@
----
+  ---
 - name: Download the GLPI latest release
   ansible.builtin.get_url:
     url: https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz
@@ -33,7 +33,7 @@
 - name: Installation of the glpi configuration
   ansible.builtin.template:
     src: ../templates/glpi.j2
-    dest: /etc/nginx/sites-available
+    dest: /etc/nginx/sites-available/glpi
     owner: root
     group: root
     mode: 0644
