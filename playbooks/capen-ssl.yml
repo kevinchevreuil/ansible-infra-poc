@@ -1,0 +1,3 @@
+- hosts: capen_ssl
+  roles:
+    - common-all
