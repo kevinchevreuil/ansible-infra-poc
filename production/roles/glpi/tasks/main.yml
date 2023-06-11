@@ -9,9 +9,6 @@
     src: /tmp/glpi-{{ glpi_version }}.tgz
     dest: /srv/
     remote_src: true
-    extra_opts:
-    - --keep-old-files
-    - --keep-directory-symlink
 
 - name: Change ownership of the directory
   ansible.builtin.file:
