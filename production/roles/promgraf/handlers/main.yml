@@ -10,3 +10,15 @@
     name: nginx
     state: reloaded
     enabled: true
+
+- name: Restart grafana-server
+  ansible.builtin.service:
+    name: grafana-server
+    state: restarted
+    enabled: true
+
+- name: Restart prometheus
+  ansible.builtin.service:
+    name: prometheus
+    state: restarted
+    enabled: true

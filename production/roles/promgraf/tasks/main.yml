@@ -35,8 +35,28 @@
     state: started
     enabled: true
 
+- name: "Add the grafana.ini file"
+  ansible.builtin.copy:
+    src: "../secrets/grafana.ini"
+    dest: "/etc/grafana/"
+    owner: "root"
+    group: "grafana"
+    mode: "0640"
+  notify:
+    - Restart grafana-server
+
+- name: "Add the default file for Prometheus"
+  ansible.builtin.copy:
+    src: "../secrets/default.j2"
+    dest: "/etc/default/prometheus"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - Restart prometheus
+
 - name: "Add the TLS cert for prometheus"
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "../secrets/prometheus.exo-industries.xyz.crt"
     dest: "/etc/ssl/certs/prometheus.exo-industries.xyz.crt"
     owner: "root"
@@ -46,7 +66,7 @@
     - Restart nginx
 
 - name: "Add the TLS key for prometheus"
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "../secrets/prometheus.exo-industries.xyz.key"
     dest: "/etc/ssl/private/prometheus.exo-industries.xyz.key"
     owner: "root"
@@ -56,7 +76,7 @@
     - Restart nginx
 
 - name: "Add the nginx prometheus virtualhost"
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "../templates/prometheus.j2"
     dest: "/etc/nginx/sites-available/prometheus"
     owner: "root"
@@ -74,7 +94,7 @@
     - Reload nginx
 
 - name: "Add the TLS cert for grafana"
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "../secrets/grafana.exo-industries.xyz.crt"
     dest: "/etc/ssl/certs/grafana.exo-industries.xyz.crt"
     owner: "root"
@@ -84,7 +104,7 @@
     - Restart nginx
 
 - name: "Add the TLS key for grafana"
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "../secrets/grafana.exo-industries.xyz.key"
     dest: "/etc/ssl/private/grafana.exo-industries.xyz.key"
     owner: "root"
@@ -94,7 +114,7 @@
     - Restart nginx
 
 - name: "Add the nginx grafana virtualhost"
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "../templates/grafana.j2"
     dest: "/etc/nginx/sites-available/grafana"
     owner: "root"
