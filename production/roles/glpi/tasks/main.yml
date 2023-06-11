@@ -19,6 +19,7 @@
     - mariadb-server
     - php-fpm
     - php-common
+    - php{{ php_version }}-common
     - php-mysql
     - php-json
     - php-curl
