@@ -12,7 +12,6 @@
     extra_opts:
     - --keep-old-files
     - --keep-directory-symlink
-    - -no-overwrite-dir
 
 - name: Change ownership of the directory
   ansible.builtin.file:
