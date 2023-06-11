@@ -29,12 +29,6 @@
     - php-zip
     - php-mbstring
 
-- name: Hardening of GLPI permissions
-  ansible.builtin.file:
-    path: /srv/glpi/public
-    state: directory
-    mode: '0750'
-
 - name: Start and enable the php-fpm service
   ansible.builtin.service:
     name: php{{ php_version }}-fpm
