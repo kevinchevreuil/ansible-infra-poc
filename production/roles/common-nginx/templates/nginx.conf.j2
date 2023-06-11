@@ -10,7 +10,6 @@ events {
 }
 
 http {
-
 	sendfile on;
 	tcp_nopush on;
 	types_hash_max_size 2048;
@@ -23,8 +22,8 @@ http {
 	ssl_prefer_server_ciphers on;
 	ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA HIGH !RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
 
-	access_log /var/log/nginx/access.log warn;
-	error_log /var/log/nginx/error.log warn;
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
 
 	gzip on;
 	gzip_vary on;
