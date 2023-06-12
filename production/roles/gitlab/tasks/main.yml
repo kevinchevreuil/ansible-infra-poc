@@ -7,4 +7,4 @@
     - perl
 
 - name: Installation of GitLab
-  ansible.builtin.command: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+  ansible.builtin.shell: "curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash"
