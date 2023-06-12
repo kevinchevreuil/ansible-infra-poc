@@ -23,6 +23,14 @@
     mode: "0600"
   notify: Reconfiguration of gitlab
 
+- name: Creation of the SSL directory
+  ansible.builtin.file:
+    path: /etc/gitlab/ssh
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+
 - name: Installation of GitLab TLS certificate
   ansible.builtin.template:
     src: ../secrets/gitlab.exo-industries.xyz.crt
