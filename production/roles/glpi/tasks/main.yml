@@ -94,9 +94,7 @@
 
 - name: Delete default databases
   mysql_db:
-    name:
-     - mysql
-     - sys
+    name: sys
     state: absent
 
 - name: Removes anonymous user account for localhost
@@ -115,7 +113,6 @@
   mysql_db:
     name: "{{ glpi_db }}"
     state: present
-  no_log: true
 
 - name: Create database user and password with all database privileges
   mysql_user:
@@ -123,4 +120,3 @@
     password: "{{ glpi_dbpasswd }}"
     priv: '*.*:ALL'
     state: present
-  no_log: true
