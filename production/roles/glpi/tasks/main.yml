@@ -92,6 +92,13 @@
   notify:
     - Restart php-fpm
 
+- name: Delete default databases
+  mysql_db:
+    name:
+     - mysql
+     - sys
+    state: absent
+
 - name: Removes anonymous user account for localhost
   mysql_user:
     name: ''
