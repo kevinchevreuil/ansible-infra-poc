@@ -2222,9 +2222,9 @@ alertmanager['listen_address'] = '192.168.10.208:9093'
 ##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/node_exporter.html
 ################################################################################
 
-node_exporter['enable'] = true
-node_exporter['home'] = '/var/opt/gitlab/node-exporter'
-node_exporter['log_directory'] = '/var/log/gitlab/node-exporter'
+# node_exporter['enable'] = true
+# node_exporter['home'] = '/var/opt/gitlab/node-exporter'
+# node_exporter['log_directory'] = '/var/log/gitlab/node-exporter'
 # node_exporter['log_group'] = nil
 # node_exporter['flags'] = {
 #   'collector.textfile.directory' => "/var/opt/gitlab/node-exporter/textfile_collector"
@@ -2235,7 +2235,7 @@ node_exporter['log_directory'] = '/var/log/gitlab/node-exporter'
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-node_exporter['listen_address'] = '192.168.10.208:9100'
+# node_exporter['listen_address'] = 'localhost:9100'
 
 ##! Service name used to register Node Exporter as a Consul service
 # node_exporter['consul_service_name'] = 'node-exporter'
