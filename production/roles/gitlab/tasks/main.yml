@@ -1,0 +1,11 @@
+---
+- name: Installation of required packages
+  ansible.builtin.apt:
+    pkg:
+    - postfix
+    - curl
+    - perl
+
+- name: Installation of GitLab
+  ansible.builtin.command:
+  curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
