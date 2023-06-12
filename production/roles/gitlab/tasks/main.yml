@@ -21,9 +21,7 @@
     owner: root
     group: root
     mode: "0600"
-  notify:
-    - Reconfiguration of gitlab
-    - Restart gitlab
+  notify: Reconfiguration of gitlab
 
 - name: Creation of the SSL directory
   ansible.builtin.file:

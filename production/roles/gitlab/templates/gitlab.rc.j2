@@ -130,7 +130,7 @@ external_url 'https://gitlab.exo-industries.xyz'
 ##! `8`  for Light Green
 ##! `9`  for Red
 ##! `10` for Light Red
-gitlab_rails['gitlab_default_theme'] = 9
+# gitlab_rails['gitlab_default_theme'] = 2
 
 ### Default project feature settings
 # gitlab_rails['gitlab_default_projects_features_issues'] = true
@@ -1190,16 +1190,16 @@ gitlab_rails['gitlab_default_theme'] = 9
 ## gitlab-sshd
 ################################################################################
 
-gitlab_sshd['enable'] = true
-gitlab_sshd['generate_host_keys'] = true
-gitlab_sshd['dir'] = "/var/opt/gitlab/gitlab-sshd"
+# gitlab_sshd['enable'] = false
+# gitlab_sshd['generate_host_keys'] = true
+# gitlab_sshd['dir'] = "/var/opt/gitlab/gitlab-sshd"
 
 # gitlab-sshd outputs most logs to /var/log/gitlab/gitlab-shell/gitlab-shell.log.
 # This directory only stores stdout/stderr output from the daemon.
-gitlab_sshd['log_directory'] = "/var/log/gitlab/gitlab-sshd/"
+# gitlab_sshd['log_directory'] = "/var/log/gitlab/gitlab-sshd/"
 
-gitlab_sshd['env_directory'] = '/opt/gitlab/etc/gitlab-sshd/env'
-gitlab_sshd['listen_address'] = 'localhost:2222'
+# gitlab_sshd['env_directory'] = '/opt/gitlab/etc/gitlab-sshd/env'
+# gitlab_sshd['listen_address'] = 'localhost:2222'
 # gitlab_sshd['metrics_address'] = 'localhost:9122'
 # gitlab_sshd['concurrent_sessions_limit'] = 100
 # gitlab_sshd['proxy_protocol'] = false
@@ -1503,22 +1503,22 @@ gitlab_sshd['listen_address'] = 'localhost:2222'
 ##! When bundled nginx is disabled we need to add the external webserver user to
 ##! the GitLab webserver group.
 # web_server['external_users'] = []
-web_server['username'] = 'gitlab-www'
-web_server['group'] = 'gitlab-www'
-web_server['uid'] = 1230
-web_server['gid'] = 1230
-web_server['shell'] = '/bin/false'
-web_server['home'] = '/var/opt/gitlab/nginx'
+# web_server['username'] = 'gitlab-www'
+# web_server['group'] = 'gitlab-www'
+# web_server['uid'] = nil
+# web_server['gid'] = nil
+# web_server['shell'] = '/bin/false'
+# web_server['home'] = '/var/opt/gitlab/nginx'
 
 ################################################################################
 ## GitLab NGINX
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html
 ################################################################################
 
-nginx['enable'] = true
-nginx['client_max_body_size'] = '250m'
+# nginx['enable'] = true
+# nginx['client_max_body_size'] = '250m'
 nginx['redirect_http_to_https'] = true
-nginx['redirect_http_to_https_port'] = 443
+# nginx['redirect_http_to_https_port'] = 80
 
 ##! Most root CA's are included by default
 # nginx['ssl_client_certificate'] = "/etc/gitlab/ssl/ca.crt"
@@ -1539,15 +1539,15 @@ nginx['ssl_prefer_server_ciphers'] = "on"
 nginx['ssl_protocols'] = "TLSv1.2 TLSv1.3"
 
 ##! **Recommended in: https://nginx.org/en/docs/http/ngx_http_ssl_module.html**
-nginx['ssl_session_cache'] = "shared:SSL:10m"
+# nginx['ssl_session_cache'] = "shared:SSL:10m"
 
 ##! **Recommended in: https://ssl-config.mozilla.org/#server=nginx&version=1.17.7&config=intermediate&openssl=1.1.1d&ocsp=false&guideline=5.6**
-nginx['ssl_session_tickets'] = "off"
+# nginx['ssl_session_tickets'] = "off"
 
 ##! **Default according to https://nginx.org/en/docs/http/ngx_http_ssl_module.html**
-nginx['ssl_session_timeout'] = "1d"
+# nginx['ssl_session_timeout'] = "1d"
 
-nginx['ssl_dhparam'] = "/etc/gitlab/ssl/dhparams.pem" # Path to dhparams.pem, eg. /etc/gitlab/ssl/dhparams.pem
+# nginx['ssl_dhparam'] = nil # Path to dhparams.pem, eg. /etc/gitlab/ssl/dhparams.pem
 # nginx['ssl_password_file'] = nil # Path to file with passphrases for ssl certificate secret keys
 # nginx['listen_addresses'] = ['*', '[::]']
 
@@ -1576,17 +1576,17 @@ nginx['gzip_enabled'] = true
 
 # nginx['custom_gitlab_server_config'] = "location ^~ /foo-namespace/bar-project/raw/ {\n deny all;\n}\n"
 # nginx['custom_nginx_config'] = "include /etc/nginx/conf.d/example.conf;"
-nginx['proxy_read_timeout'] = 3600
-nginx['proxy_connect_timeout'] = 300
-nginx['proxy_set_headers'] = {
-"Host" => "$http_host_with_default",
-"X-Real-IP" => "$remote_addr",
-"X-Forwarded-For" => "$proxy_add_x_forwarded_for",
-"X-Forwarded-Proto" => "http",
-"X-Forwarded-Ssl" => "on",
-"Upgrade" => "$http_upgrade",
-"Connection" => "$connection_upgrade"
-}
+# nginx['proxy_read_timeout'] = 3600
+# nginx['proxy_connect_timeout'] = 300
+# nginx['proxy_set_headers'] = {
+#  "Host" => "$http_host_with_default",
+#  "X-Real-IP" => "$remote_addr",
+#  "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
+#  "X-Forwarded-Proto" => "https",
+#  "X-Forwarded-Ssl" => "on",
+#  "Upgrade" => "$http_upgrade",
+#  "Connection" => "$connection_upgrade"
+# }
 # nginx['proxy_cache_path'] = 'proxy_cache keys_zone=gitlab:10m max_size=1g levels=1:2'
 # nginx['proxy_cache'] = 'gitlab'
 # nginx['proxy_custom_buffer_size'] = '4k'
@@ -1603,24 +1603,24 @@ nginx['http2_enabled'] = true
 # }
 
 ### Advanced settings
-nginx['dir'] = "/var/opt/gitlab/nginx"
-nginx['log_directory'] = "/var/log/gitlab/nginx"
+# nginx['dir'] = "/var/opt/gitlab/nginx"
+# nginx['log_directory'] = "/var/log/gitlab/nginx"
 # nginx['log_group'] = nil
 # nginx['error_log_level'] = "error"
 nginx['worker_processes'] = 4
-nginx['worker_connections'] = 8000
+nginx['worker_connections'] = 1024
 # nginx['log_format'] = '$remote_addr - $remote_user [$time_local] "$request_method $filtered_request_uri $server_protocol" $status $body_bytes_sent "$filtered_http_referer" "$http_user_agent" $gzip_ratio'
 # nginx['sendfile'] = 'on'
 # nginx['tcp_nopush'] = 'on'
 # nginx['tcp_nodelay'] = 'on'
 nginx['hide_server_tokens'] = 'on'
-nginx['gzip_http_version'] = "1.0"
-nginx['gzip_comp_level'] = "2"
-nginx['gzip_proxied'] = "any"
+# nginx['gzip_http_version'] = "1.0"
+# nginx['gzip_comp_level'] = "2"
+# nginx['gzip_proxied'] = "any"
 nginx['gzip_types'] = [ "text/plain", "text/css", "application/x-javascript", "text/xml", "application/xml", "application/xml+rss", "text/javascript", "application/json" ]
-nginx['keepalive_timeout'] = 65
-nginx['keepalive_time'] = '1h'
-nginx['cache_max_size'] = '5000m'
+# nginx['keepalive_timeout'] = 65
+# nginx['keepalive_time'] = '1h'
+# nginx['cache_max_size'] = '5000m'
 # nginx['server_names_hash_bucket_size'] = 64
 ##! These paths have proxy_request_buffering disabled
 # nginx['request_buffering_off_path_regex'] = "/api/v\\d/jobs/\\d+/artifacts$|/import/gitlab_project$|\\.git/git-receive-pack$|\\.git/gitlab-lfs/objects|\\.git/info/lfs/objects/batch$"
@@ -1629,11 +1629,11 @@ nginx['cache_max_size'] = '5000m'
 # nginx['status'] = {
 #  "enable" => true,
 #  "listen_addresses" => ["127.0.0.1"],
-# "fqdn" => "gitlab.exo-industries.xyz",
+#  "fqdn" => "dev.example.com",
 #  "port" => 9999,
 #  "vts_enable" => true,
 #  "options" => {
-# "server_tokens" => "off", # Don't show the version of NGINX
+#    "server_tokens" => "off", # Don't show the version of NGINX
 #    "access_log" => "off", # Disable logs for stats
 #    "allow" => "127.0.0.1", # Only allow access from localhost
 #    "deny" => "all" # Deny access to anyone else
@@ -2092,13 +2092,13 @@ nginx['cache_max_size'] = '5000m'
 # Below you can find settings that are exclusive to "Registry NGINX"
 # registry_nginx['enable'] = false
 
-registry_nginx['proxy_set_headers'] = {
-"Host" => "$http_host",
-"X-Real-IP" => "$remote_addr",
-"X-Forwarded-For" => "$proxy_add_x_forwarded_for",
-"X-Forwarded-Proto" => "http",
-"X-Forwarded-Ssl" => "on"
-}
+# registry_nginx['proxy_set_headers'] = {
+#  "Host" => "$http_host",
+#  "X-Real-IP" => "$remote_addr",
+#  "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
+#  "X-Forwarded-Proto" => "https",
+#  "X-Forwarded-Ssl" => "on"
+# }
 
 # When the registry is automatically enabled using the same domain as `external_url`,
 # it listens on this port
@@ -2171,11 +2171,11 @@ registry_nginx['proxy_set_headers'] = {
 #
 ### Custom Prometheus flags
 #
-prometheus['flags'] = {
-'storage.tsdb.path' => "/var/opt/gitlab/prometheus/data",
-'storage.tsdb.retention.time' => "15d",
-'config.file' => "/var/opt/gitlab/prometheus/prometheus.yml"
-}
+# prometheus['flags'] = {
+#   'storage.tsdb.path' => "/var/opt/gitlab/prometheus/data",
+#   'storage.tsdb.retention.time' => "15d",
+#   'config.file' => "/var/opt/gitlab/prometheus/prometheus.yml"
+# }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
 # prometheus['listen_address'] = 'localhost:9090'
@@ -2198,15 +2198,15 @@ prometheus['flags'] = {
 ## Prometheus Alertmanager
 ################################################################################
 
-alertmanager['enable'] = true
-alertmanager['home'] = '/var/opt/gitlab/alertmanager'
-alertmanager['log_directory'] = '/var/log/gitlab/alertmanager'
+# alertmanager['enable'] = true
+# alertmanager['home'] = '/var/opt/gitlab/alertmanager'
+# alertmanager['log_directory'] = '/var/log/gitlab/alertmanager'
 # alertmanager['log_group'] = nil
 # alertmanager['admin_email'] = 'admin@example.com'
 # alertmanager['flags'] = {
-'web.listen-address' => "localhost:9093",
-'storage.path' => "/var/opt/gitlab/alertmanager/data",
-'config.file' => "/var/opt/gitlab/alertmanager/alertmanager.yml"
+#   'web.listen-address' => "localhost:9093",
+#   'storage.path' => "/var/opt/gitlab/alertmanager/data",
+#   'config.file' => "/var/opt/gitlab/alertmanager/alertmanager.yml"
 # }
 # alertmanager['env_directory'] = '/opt/gitlab/etc/alertmanager/env'
 # alertmanager['env'] = {
@@ -2214,7 +2214,7 @@ alertmanager['log_directory'] = '/var/log/gitlab/alertmanager'
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-alertmanager['listen_address'] = '192.168.10.208:9093'
+# alertmanager['listen_address'] = 'localhost:9093'
 # alertmanager['global'] = {}
 
 ################################################################################
@@ -2247,19 +2247,19 @@ alertmanager['listen_address'] = '192.168.10.208:9093'
 ##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/redis_exporter.html
 ################################################################################
 
-redis_exporter['enable'] = true
-redis_exporter['log_directory'] = '/var/log/gitlab/redis-exporter'
+# redis_exporter['enable'] = true
+# redis_exporter['log_directory'] = '/var/log/gitlab/redis-exporter'
 # redis_exporter['log_group'] = nil
-redis_exporter['flags'] = {
-   'redis.addr' => "unix:///var/opt/gitlab/redis/redis.socket",
+# redis_exporter['flags'] = {
+#   'redis.addr' => "unix:///var/opt/gitlab/redis/redis.socket",
 # }
-redis_exporter['env_directory'] = '/opt/gitlab/etc/redis-exporter/env'
-redis_exporter['env'] = {
+# redis_exporter['env_directory'] = '/opt/gitlab/etc/redis-exporter/env'
+# redis_exporter['env'] = {
 #   'SSL_CERT_DIR' => "/opt/gitlab/embedded/ssl/certs/"
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-redis_exporter['listen_address'] = '192.168.10.208:9121'
+# redis_exporter['listen_address'] = 'localhost:9121'
 
 ##! Service name used to register Redis Exporter as a Consul service
 # redis_exporter['consul_service_name'] = 'redis-exporter'
@@ -2271,13 +2271,13 @@ redis_exporter['listen_address'] = '192.168.10.208:9121'
 ##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/postgres_exporter.html
 ################################################################################
 
-postgres_exporter['enable'] = true
-postgres_exporter['home'] = '/var/opt/gitlab/postgres-exporter'
-postgres_exporter['log_directory'] = '/var/log/gitlab/postgres-exporter'
+# postgres_exporter['enable'] = true
+# postgres_exporter['home'] = '/var/opt/gitlab/postgres-exporter'
+# postgres_exporter['log_directory'] = '/var/log/gitlab/postgres-exporter'
 # postgres_exporter['log_group'] = nil
 # postgres_exporter['flags'] = {}
-postgres_exporter['listen_address'] = '192.168.10.208:9187'
-postgres_exporter['env_directory'] = '/opt/gitlab/etc/postgres-exporter/env'
+# postgres_exporter['listen_address'] = 'localhost:9187'
+# postgres_exporter['env_directory'] = '/opt/gitlab/etc/postgres-exporter/env'
 # postgres_exporter['env'] = {
 #   'SSL_CERT_DIR' => "/opt/gitlab/embedded/ssl/certs/"
 # }
@@ -2309,25 +2309,25 @@ postgres_exporter['env_directory'] = '/opt/gitlab/etc/postgres-exporter/env'
 ################################################################################
 
 
-gitlab_exporter['enable'] = true
-gitlab_exporter['log_directory'] = "/var/log/gitlab/gitlab-exporter"
+# gitlab_exporter['enable'] = true
+# gitlab_exporter['log_directory'] = "/var/log/gitlab/gitlab-exporter"
 # gitlab_exporter['log_group'] = nil
-gitlab_exporter['home'] = "/var/opt/gitlab/gitlab-exporter"
+# gitlab_exporter['home'] = "/var/opt/gitlab/gitlab-exporter"
 
 ##! Advanced settings. Should be changed only if absolutely needed.
- gitlab_exporter['server_name'] = 'webrick'
- gitlab_exporter['listen_address'] = '192.168.10.208'
- gitlab_exporter['listen_port'] = '9168'
+# gitlab_exporter['server_name'] = 'webrick'
+# gitlab_exporter['listen_address'] = 'localhost'
+# gitlab_exporter['listen_port'] = '9168'
 
 ##! TLS settings.
 # gitlab_exporter['tls_enabled'] = false
- gitlab_exporter['tls_cert_path'] = '/etc/gitlab/ssl/gitlab.exo-industries.xyz.crt'
- gitlab_exporter['tls_key_path'] = '/etc/gitlab/ssl/gitlab.exo-industries.xyz.key'
+# gitlab_exporter['tls_cert_path'] = '/etc/gitlab/ssl/gitlab-exporter.crt'
+# gitlab_exporter['tls_key_path'] = '/etc/gitlab/ssl/gitlab-exporter.key'
 
 ##! Prometheus scrape related configs
-gitlab_exporter['prometheus_scrape_scheme'] = 'https'
-gitlab_exporter['prometheus_scrape_tls_server_name'] = 'gitlab.exo-industries.xyz'
-gitlab_exporter['prometheus_scrape_tls_skip_verification'] = false
+# gitlab_exporter['prometheus_scrape_scheme'] = 'http'
+# gitlab_exporter['prometheus_scrape_tls_server_name'] = 'localhost'
+# gitlab_exporter['prometheus_scrape_tls_skip_verification'] = false
 
 ##! Manage gitlab-exporter sidekiq probes. false by default when Sentinels are
 ##! found.
@@ -2345,7 +2345,7 @@ gitlab_exporter['prometheus_scrape_tls_skip_verification'] = false
 # gitlab_exporter['consul_service_meta'] = {}
 
 # To completely disable prometheus, and all of it's exporters, set to false
-prometheus_monitoring['enable'] = true
+# prometheus_monitoring['enable'] = true
 
 ################################################################################
 ## Grafana Dashboards
