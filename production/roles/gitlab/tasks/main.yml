@@ -7,4 +7,36 @@
     - perl
 
 - name: Installation of GitLab
-  ansible.builtin.shell: "curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash"
+  ansible.builtin.shell: "curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash"
+
+- name: Package installation
+  ansible.builtin.apt:
+    pkg:
+    - gitlab-ce
+
+- name: Installation of the gitlab.rc config
+  ansible.builtin.template:
+    src: ../templates/gitlab.rc.j2
+    dest: /etc/gitlab/gitlab.rc
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Reconfiguration of gitlab
+
+- name: Installation of GitLab TLS certificate
+  ansible.builtin.template:
+    src: ../secrets/gitlab.exo-industries.xyz.crt
+    dest: /etc/gitlab/ssl/gitlab.exo-industries.xyz.crt
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart gitlab
+
+- name: Installation of GitLab TLS key
+  ansible.builtin.template:
+    src: ../secrets/gitlab.exo-industries.xyz.key
+    dest: /etc/gitlab/ssl/gitlab.exo-industries.xyz.key
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart gitlab
