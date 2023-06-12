@@ -1503,12 +1503,12 @@ gitlab_sshd['listen_address'] = 'localhost:2222'
 ##! When bundled nginx is disabled we need to add the external webserver user to
 ##! the GitLab webserver group.
 # web_server['external_users'] = []
-# web_server['username'] = 'gitlab-www'
-# web_server['group'] = 'gitlab-www'
-# web_server['uid'] = nil
-# web_server['gid'] = nil
-# web_server['shell'] = '/bin/false'
-# web_server['home'] = '/var/opt/gitlab/nginx'
+web_server['username'] = 'gitlab-www'
+web_server['group'] = 'gitlab-www'
+web_server['uid'] = 1230
+web_server['gid'] = 1230
+web_server['shell'] = '/bin/false'
+web_server['home'] = '/var/opt/gitlab/nginx'
 
 ################################################################################
 ## GitLab NGINX
@@ -1582,7 +1582,7 @@ nginx['proxy_set_headers'] = {
 "Host" => "$http_host_with_default",
 "X-Real-IP" => "$remote_addr",
 "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
-"X-Forwarded-Proto" => "https",
+"X-Forwarded-Proto" => "http",
 "X-Forwarded-Ssl" => "on",
 "Upgrade" => "$http_upgrade",
 "Connection" => "$connection_upgrade"
@@ -1614,13 +1614,13 @@ nginx['worker_connections'] = 8000
 # nginx['tcp_nopush'] = 'on'
 # nginx['tcp_nodelay'] = 'on'
 nginx['hide_server_tokens'] = 'on'
-# nginx['gzip_http_version'] = "1.0"
-# nginx['gzip_comp_level'] = "2"
-# nginx['gzip_proxied'] = "any"
-# nginx['gzip_types'] = [ "text/plain", "text/css", "application/x-javascript", "text/xml", "application/xml", "application/xml+rss", "text/javascript", "application/json" ]
-# nginx['keepalive_timeout'] = 65
-# nginx['keepalive_time'] = '1h'
-# nginx['cache_max_size'] = '5000m'
+nginx['gzip_http_version'] = "1.0"
+nginx['gzip_comp_level'] = "2"
+nginx['gzip_proxied'] = "any"
+nginx['gzip_types'] = [ "text/plain", "text/css", "application/x-javascript", "text/xml", "application/xml", "application/xml+rss", "text/javascript", "application/json" ]
+nginx['keepalive_timeout'] = 65
+nginx['keepalive_time'] = '1h'
+nginx['cache_max_size'] = '5000m'
 # nginx['server_names_hash_bucket_size'] = 64
 ##! These paths have proxy_request_buffering disabled
 # nginx['request_buffering_off_path_regex'] = "/api/v\\d/jobs/\\d+/artifacts$|/import/gitlab_project$|\\.git/git-receive-pack$|\\.git/gitlab-lfs/objects|\\.git/info/lfs/objects/batch$"
@@ -2096,7 +2096,7 @@ registry_nginx['proxy_set_headers'] = {
 "Host" => "$http_host",
 "X-Real-IP" => "$remote_addr",
 "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
-"X-Forwarded-Proto" => "https",
+"X-Forwarded-Proto" => "http",
 "X-Forwarded-Ssl" => "on"
 }
 
