@@ -25,7 +25,7 @@
 
 - name: Creation of the SSL directory
   ansible.builtin.file:
-    path: /etc/gitlab/ssh
+    path: /etc/gitlab/ssl
     owner: root
     group: root
     mode: '0755'
