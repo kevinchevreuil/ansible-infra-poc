@@ -13,11 +13,9 @@
     group: www-data
     mode: "0755"
 
-- name: Installation of required packages
+- name: Installation of required PHP packages
   ansible.builtin.apt:
     pkg:
-    - python3-mysqldb
-    - mariadb-server
     - php-fpm
     - php-common
     - php{{ php_version }}-common
@@ -35,12 +33,6 @@
 - name: Start and enable the php-fpm service
   ansible.builtin.service:
     name: php{{ php_version }}-fpm
-    state: started
-    enabled: true
-
-- name: Start and enable the mariadb service
-  ansible.builtin.service:
-    name: mariadb
     state: started
     enabled: true
 
@@ -103,26 +95,10 @@
   notify:
     - Restart php-fpm
 
-- name: Delete default databases
-  mysql_db:
-    name: sys
-    state: absent
-
-- name: Removes anonymous user account for localhost
-  mysql_user:
-    name: ''
-    host: localhost
-    state: absent
-
-- name: Removes all anonymous user accounts
-  mysql_user:
-    name: ''
-    host_all: yes
-    state: absent
-
 - name: Create the database
   mysql_db:
     name: "{{ glpi_db }}"
+    login_host: 192.168.10.230
     state: present
 
 - name: Create database user and password with all database privileges
@@ -130,4 +106,5 @@
     name: "{{ glpi_dbuser }}"
     password: "{{ glpi_dbpasswd }}"
     priv: '*.*:ALL'
+    login_host: 192.168.10.230
     state: present
