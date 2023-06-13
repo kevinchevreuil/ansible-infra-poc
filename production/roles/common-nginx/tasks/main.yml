@@ -1,7 +1,7 @@
 ---
 - name: Creation of the web user for nginx
   ansible.builtin.user:
-    name: web
+    name: "{{ nginx_user }}"
     comment: Webserver user
     uid: 9999
     home: /dev/null

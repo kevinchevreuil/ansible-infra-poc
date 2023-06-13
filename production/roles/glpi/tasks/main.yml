@@ -82,6 +82,16 @@
   notify:
     - Restart nginx
 
+- name: Add the custom www pool
+  ansible.builtin.template:
+    src: ../templates/www.conf.j2
+    dest: /etc/php/{{ php_version }}/fpm/pool.d/www.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart php-fpm
+
 - name: Add the hardening php.ini file
   ansible.builtin.copy:
     src: ../templates/php.ini.j2
