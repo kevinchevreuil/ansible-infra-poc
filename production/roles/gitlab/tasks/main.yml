@@ -16,8 +16,8 @@
 
 - name: Installation of the gitlab.rc config
   ansible.builtin.template:
-    src: ../templates/gitlab.rc.j2
-    dest: /etc/gitlab/gitlab.rc
+    src: ../templates/gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
     owner: root
     group: root
     mode: "0600"
