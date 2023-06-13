@@ -31,8 +31,8 @@
 
 - name: Add the CA for MariaDB
   ansible.builtin.copy:
-    src: ../secrets/ca.crt
-    dest: /etc/ssl/certs/ca-exoindustries.crt
+    src: ../secrets/ca.pem
+    dest: /etc/ssl/certs/ca-exoindustries.pem
     owner: root
     group: root
     mode: "0644"
