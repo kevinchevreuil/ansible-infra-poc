@@ -82,13 +82,14 @@
   notify:
     - Restart nginx
 
-- name: Add the custom www pool
-  ansible.builtin.template:
-    src: ../templates/www.conf.j2
-    dest: /etc/php/{{ php_version }}/fpm/pool.d/www.conf
+- name: Add the new nginx user in the www pool
+  ansible.builtin.lineinfile:
+    path: /etc/php/{{ php_version }}/fpm/pool.d/www.conf
+    regexp: 'www-data'
+    line: {{ nginx_user }}
     owner: root
     group: root
-    mode: "0644"
+    mode: '0644'
   notify:
     - Restart php-fpm
 
