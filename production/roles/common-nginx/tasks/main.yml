@@ -1,4 +1,14 @@
 ---
+- name: Creation of the web user for nginx
+  ansible.builtin.user:
+    name: web
+    comment: Webserver user
+    uid: 9999
+    home: /dev/null
+    create_home: false
+    shell: /usr/sbin/nologin
+    state: present
+
 - name: Install nginx
   ansible.builtin.apt:
     pkg: nginx
