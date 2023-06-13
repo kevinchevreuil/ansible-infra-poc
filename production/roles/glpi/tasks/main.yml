@@ -9,8 +9,8 @@
     src: /tmp/glpi-{{ glpi_version }}.tgz
     dest: /srv/
     remote_src: true
-    owner: www-data
-    group: www-data
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"
     mode: "0755"
 
 - name: Installation of required packages
