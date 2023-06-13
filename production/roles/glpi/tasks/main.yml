@@ -85,8 +85,8 @@
 - name: Add the new nginx user in the www pool
   ansible.builtin.replace:
     path: /etc/php/{{ php_version }}/fpm/pool.d/www.conf
-    before: 'www-data'
-    after: "{{ nginx_user }}"
+    regexp: 'www-data'
+    replace: "{{ nginx_user }}"
     owner: root
     group: root
     mode: '0644'
