@@ -1,4 +1,4 @@
 ---
 dependencies:
   - role: common-all
-  - role: common-nginx
+  - role: nginx

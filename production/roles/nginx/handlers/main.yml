@@ -1,18 +1,12 @@
 ---
-- name: Restart nginx
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
-    enabled: true
-
 - name: Reload nginx
   ansible.builtin.service:
     name: nginx
     state: reloaded
     enabled: true
 
-- name: Restart php-fpm
+- name: Restart nginx
   ansible.builtin.service:
-    name: php{{ php_version }}-fpm
+    name: nginx
     state: restarted
     enabled: true

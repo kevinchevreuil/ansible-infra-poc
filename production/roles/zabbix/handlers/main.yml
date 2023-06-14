@@ -1,12 +1,12 @@
 ---
-- name: Restart grafana-server
+- name: Restart zabbix-agent
   ansible.builtin.service:
-    name: grafana-server
+    name: zabbix-agent
     state: restarted
     enabled: true
 
-- name: Restart prometheus
+- name: Restart zabbix-server
   ansible.builtin.service:
-    name: prometheus
+    name: zabbix-server
     state: restarted
     enabled: true

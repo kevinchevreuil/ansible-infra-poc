@@ -1,0 +1,58 @@
+---
+- name: Download Zabbix {{ zabbix_version }} version
+  ansible.builtin.get_url:
+    url: https://repo.zabbix.com/zabbix/{{ zabbix_version }}/debian/pool/main/z/zabbix-release/zabbix-release_{{ zabbix_version }}-1+debian12_all.deb
+    dest: /tmp
+
+- name: Ensure of xz-utils is installed
+  ansible.builtin.package:
+    name: xz-utils
+    state: present
+
+- name: Installation of the zabbix package
+  ansible.builtin.apt:
+    deb: /tmp/zabbix-release_{{ zabbix_version }}-1+debian12_all.deb
+
+- name: Installation of required packages
+  ansible.builtin.apt:
+    pkg:
+    - zabbix-server-mysql
+    - zabbix-frontend-php
+    - zabbix-nginx-conf
+    - zabbix-sql-scripts
+    - zabbix-agent
+
+- name: Start and enable the mariadb service
+  ansible.builtin.service:
+    name: mariadb
+    state: started
+    enabled: true
+
+- name: Delete default databases
+  mysql_db:
+    name: sys
+    state: absent
+
+- name: Removes anonymous user account for localhost
+  mysql_user:
+    name: ''
+    host: localhost
+    state: absent
+
+- name: Removes all anonymous user accounts
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+
+- name: Create the database
+  mysql_db:
+    name: "{{ zabbix_db }}"
+    state: present
+
+- name: Create database user and password with all database privileges
+  mysql_user:
+    name: "{{ zabbix_dbuser }}"
+    password: "{{ zabbix_dbpasswd }}"
+    priv: '*.*:ALL'
+    state: present
