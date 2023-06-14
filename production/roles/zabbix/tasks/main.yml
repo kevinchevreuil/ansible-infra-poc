@@ -15,6 +15,7 @@
 
 - name: Installation of required packages
   ansible.builtin.apt:
+  update_cache: true
     pkg:
     - zabbix-server-mysql
     - zabbix-frontend-php
