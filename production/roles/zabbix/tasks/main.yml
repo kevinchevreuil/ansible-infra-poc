@@ -18,6 +18,7 @@
     update_cache: true
     pkg:
     - mariadb-server
+    - python3-mysqldb
     - zabbix-server-mysql
     - zabbix-frontend-php
     - zabbix-nginx-conf
