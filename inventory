@@ -23,7 +23,7 @@
 [gitlab]
 192.168.10.208
 
-[monitoring]
+[zabbix]
 192.168.10.230
 
 [website]

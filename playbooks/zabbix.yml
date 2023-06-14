@@ -1,0 +1,3 @@
+- hosts: zabbix
+  roles:
+    - zabbix
