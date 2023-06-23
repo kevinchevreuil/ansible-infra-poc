@@ -1,0 +1,10 @@
+---
+- name: Add new default CMDLINE
+  ansible.builtin.copy:
+    src: ../templates/hardening-grub.cfg
+    dest: /etc/default/grub.d/
+
+- name: Add new sysctl params
+  ansible.builtin.copy:
+    src: ../templates/99-exoindustries-sysctl.conf
+    dest: /etc/sysctl.d/

@@ -75,3 +75,6 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Import all tasks
+  import_tasks: hardening.yml
