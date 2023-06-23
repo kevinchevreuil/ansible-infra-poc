@@ -4,3 +4,6 @@
     name: rsyslog
     state: restarted
     enabled: true
+
+- name: GRUB update
+  ansible.builtin.command: grub-mkconfig -o /boot/grub/grub.cfg
