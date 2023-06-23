@@ -19,3 +19,11 @@
     group: root
     mode: "0644"
   notify: Restart haproxy
+
+- name: Add the pki folder
+  ansible.builtin.file:
+    path: /etc/haproxy/pki
+    state: directory
+    owner: root
+    group: root
+    mode: 0600
