@@ -1,4 +1,13 @@
 ---
+- name: Install Apparmor packages
+  ansible.builtin.apt:
+    pkg:
+    - apparmor
+    - apparmor-notify
+    - apparmor-profiles
+    - apparmor-profiles-extra
+    - apparmor-utils
+
 - name: Add new default CMDLINE
   ansible.builtin.copy:
     src: ../templates/hardening-grub.cfg
