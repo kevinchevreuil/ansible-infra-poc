@@ -3,8 +3,24 @@
   ansible.builtin.copy:
     src: ../templates/hardening-grub.cfg
     dest: /etc/default/grub.d/
+    owner: root
+    group: root
+    mode: '0644'
+  notify: GRUB update
 
 - name: Add new sysctl params
   ansible.builtin.copy:
     src: ../templates/99-exoindustries-sysctl.conf
     dest: /etc/sysctl.d/
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Apply sysctl values
+
+- name: Apply the new default UMASK value
+  ansible.builtin.copy:
+    src: ../templates/bash.bashrc
+    dest: /etc/bash.bashrc
+    owner: root
+    group: root
+    mode: '0644'
