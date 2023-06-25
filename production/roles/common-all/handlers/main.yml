@@ -8,5 +8,5 @@
 - name: GRUB update
   ansible.builtin.command: grub-mkconfig -o /boot/grub/grub.cfg
 
-- name: Apply sysctl params
+- name: Apply sysctl values
   ansible.builtin.command: sysctl --system
