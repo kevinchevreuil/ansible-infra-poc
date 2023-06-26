@@ -76,5 +76,13 @@
     group: root
     mode: '0644'
 
+- name: Application of the SSH conffile
+  ansible.builtin.template:
+    src: ../templates/exo-industries-ssh.conf.j2
+    dest: /etc/ssh/sshd_config.d/exo-industries-ssh.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Import all tasks
   import_tasks: hardening.yml
