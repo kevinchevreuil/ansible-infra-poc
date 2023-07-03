@@ -1,3 +1,4 @@
 - hosts: rsyslog_server
+  gather_facts: no
   roles:
     - rsyslog-server

@@ -1,3 +1,4 @@
 - hosts: zabbix
+  gather_facts: no
   roles:
     - zabbix

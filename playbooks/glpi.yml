@@ -1,3 +1,4 @@
 - hosts: glpi
+  gather_facts: no
   roles:
     - glpi

@@ -1,3 +1,4 @@
 - hosts: bind_primary
+  gather_facts: no
   roles:
     - bind-primary

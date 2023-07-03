@@ -1,3 +1,4 @@
 - hosts: reverse_proxy
+  gather_facts: no
   roles:
     - reverse-proxy

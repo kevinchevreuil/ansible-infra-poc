@@ -1,3 +1,4 @@
 - hosts: bind_secondary
+  gather_facts: no
   roles:
     - bind-secondary

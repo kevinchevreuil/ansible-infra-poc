@@ -1,3 +1,4 @@
 - hosts: capen_ssl
+  gather_facts: no
   roles:
     - common-all
