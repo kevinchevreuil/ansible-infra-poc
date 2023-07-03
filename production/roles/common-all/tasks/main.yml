@@ -24,10 +24,10 @@
     state: started
     enabled: true
 
-- name: Install the rsyslog client template
+- name: Install the rsyslog client conf
   ansible.builtin.copy:
-    src: ../templates/rsyslog.conf.j2
-    dest: /etc/rsyslog.conf
+    src: rsyslog.conf
+    dest: /etc/
     owner: root
     group: root
     mode: 0644
@@ -35,7 +35,7 @@
 
 - name: Install the CA certificate
   ansible.builtin.copy:
-    src: ../secrets/ca.crt
+    src: ca.crt
     dest: /etc/ssl/certs
     owner: root
     group: root
@@ -44,7 +44,7 @@
 
 - name: Install the rsyslog client certificate
   ansible.builtin.copy:
-    src: ../secrets/rsyslog.exo-industries.xyz.crt
+    src: rsyslog.exo-industries.xyz.crt
     dest: /etc/ssl/certs
     owner: root
     group: root
@@ -53,7 +53,7 @@
 
 - name: Install the rsyslog certificate key
   ansible.builtin.copy:
-    src: ../secrets/rsyslog.exo-industries.xyz.key
+    src: rsyslog.exo-industries.xyz.key
     dest: /etc/ssl/private
     owner: root
     group: root
@@ -62,7 +62,7 @@
 
 - name: Installation of default APT settings
   ansible.builtin.copy:
-    src: ../templates/9999confold
+    src: 9999confold
     dest: /etc/apt/apt.conf.d/
     owner: root
     group: root
@@ -70,16 +70,16 @@
 
 - name: Application of the resolv.conf file
   ansible.builtin.copy:
-    src: ../templates/resolv.conf.j2
-    dest: /etc/resolv.conf
+    src: resolv.conf
+    dest: /etc/
     owner: root
     group: root
     mode: '0644'
 
 - name: Application of the SSH conffile
   ansible.builtin.template:
-    src: ../templates/exo-industries-ssh.conf.j2
-    dest: /etc/ssh/sshd_config.d/exo-industries-ssh.conf
+    src: sshd_config
+    dest: /etc/ssh/
     owner: root
     group: root
     mode: '0644'
