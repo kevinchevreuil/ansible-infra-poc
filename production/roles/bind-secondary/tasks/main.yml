@@ -7,9 +7,9 @@
     - prometheus-bind-exporter
 
 - name: Installation of named.conf.local
-  ansible.builtin.template:
-    src: ../secrets/named.conf.local.j2
-    dest: /etc/bind/named.conf.local
+  ansible.builtin.copy:
+    src: named.conf.local
+    dest: /etc/bind/
     owner: root
     group: bind
     mode: '0644'
@@ -17,9 +17,9 @@
     - Restart bind9
 
 - name: Installation of named.conf.options
-  ansible.builtin.template:
-    src: ../templates/named.conf.options.j2
-    dest: /etc/bind/named.conf.options
+  ansible.builtin.copy:
+    src: named.conf.options
+    dest: /etc/bind/
     owner: root
     group: bind
     mode: '0644'
@@ -27,8 +27,8 @@
     - Restart bind9
 
 - name: Installation of TSIG key
-  ansible.builtin.template:
-    src: ../secrets/dns1-dns2.key
+  ansible.builtin.copy:
+    src: dns1-dns2.key
     dest: /etc/bind/
     owner: root
     group: bind

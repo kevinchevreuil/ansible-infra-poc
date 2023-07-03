@@ -34,98 +34,90 @@
     state: started
     enabled: true
 
-- name: "Add the grafana.ini file"
+- name: Add the grafana.ini file
   ansible.builtin.copy:
-    src: "../secrets/grafana.ini"
-    dest: "/etc/grafana/"
-    owner: "root"
-    group: "grafana"
-    mode: "0640"
-  notify:
-    - Restart grafana-server
-
-- name: "Add the default file for Prometheus"
-  ansible.builtin.copy:
-    src: "../templates/default-prometheus.j2"
-    dest: "/etc/default/prometheus"
-    owner: "root"
-    group: "root"
-    mode: "0644"
-  notify:
-    - Restart prometheus
-
-- name: "Add the TLS cert for prometheus"
-  ansible.builtin.copy:
-    src: "../secrets/prometheus.exo-industries.xyz.crt"
-    dest: "/etc/ssl/certs/prometheus.exo-industries.xyz.crt"
-    owner: "root"
-    group: "root"
+    src: grafana.ini
+    dest: /etc/grafana/
+    owner: root
+    group: grafana
     mode: 0640
-  notify:
-    - Restart nginx
+  notify: Restart grafana-server
 
-- name: "Add the TLS key for prometheus"
+- name: Add the default file for Prometheus
   ansible.builtin.copy:
-    src: "../secrets/prometheus.exo-industries.xyz.key"
-    dest: "/etc/ssl/private/prometheus.exo-industries.xyz.key"
-    owner: "root"
-    group: "root"
+    src: default-prometheus
+    dest: /etc/default/prometheus
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart prometheus
+
+- name: Add the TLS cert for prometheus
+  ansible.builtin.copy:
+    src: prometheus.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/
+    owner: root
+    group: root
+    mode: 0640
+  notify: Restart nginx
+
+- name: Add the TLS key for prometheus
+  ansible.builtin.copy:
+    src: prometheus.exo-industries.xyz.key
+    dest: /etc/ssl/private/
+    owner: root
+    group: root
     mode: 0600
-  notify:
-    - Restart nginx
+  notify: Restart nginx
 
-- name: "Add the nginx prometheus virtualhost"
+- name: Add the nginx prometheus virtualhost
   ansible.builtin.copy:
-    src: "../templates/prometheus.j2"
-    dest: "/etc/nginx/sites-available/prometheus"
-    owner: "root"
-    group: "root"
+    src: prometheus
+    dest: /etc/nginx/sites-available/
+    owner: root
+    group: root
     mode: 0644
 
-- name: "Enable prometheus"
+- name: Enable prometheus
   ansible.builtin.file:
-    src: "/etc/nginx/sites-available/prometheus"
-    dest: "/etc/nginx/sites-enabled/prometheus"
-    owner: "root"
-    group: "root"
-    state: "link"
-  notify:
-    - Reload nginx
+    src: /etc/nginx/sites-available/prometheus
+    dest: /etc/nginx/sites-enabled/prometheus
+    owner: root
+    group: root
+    state: link
+  notify: Reload nginx
 
-- name: "Add the TLS cert for grafana"
+- name: Add the TLS cert for grafana
   ansible.builtin.copy:
-    src: "../secrets/grafana.exo-industries.xyz.crt"
-    dest: "/etc/ssl/certs/grafana.exo-industries.xyz.crt"
-    owner: "root"
-    group: "root"
+    src: grafana.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/
+    owner: root
+    group: root
     mode: 0640
-  notify:
-    - Restart nginx
+  notify: Restart nginx
 
-- name: "Add the TLS key for grafana"
+- name: Add the TLS key for grafana
   ansible.builtin.copy:
-    src: "../secrets/grafana.exo-industries.xyz.key"
-    dest: "/etc/ssl/private/grafana.exo-industries.xyz.key"
-    owner: "root"
-    group: "root"
+    src: grafana.exo-industries.xyz.key
+    dest: /etc/ssl/private/
+    owner: root
+    group: root
     mode: 0600
-  notify:
-    - Restart nginx
+  notify: Restart nginx
 
-- name: "Add the nginx grafana virtualhost"
+- name: Add the nginx grafana virtualhost
   ansible.builtin.copy:
-    src: "../templates/grafana.j2"
-    dest: "/etc/nginx/sites-available/grafana"
-    owner: "root"
-    group: "root"
+    src: grafana
+    dest: /etc/nginx/sites-available/
+    owner: root
+    group: root
     mode: 0644
 
-- name: "Enable grafana"
+- name: Enable grafana
   ansible.builtin.file:
-    src: "/etc/nginx/sites-available/grafana"
-    dest: "/etc/nginx/sites-enabled/grafana"
-    owner: "root"
-    group: "root"
-    state: "link"
-  notify:
-    - Reload nginx
+    src: /etc/nginx/sites-available/grafana
+    dest: /etc/nginx/sites-enabled/grafana
+    owner: root
+    group: root
+    state: link
+  notify: Reload nginx

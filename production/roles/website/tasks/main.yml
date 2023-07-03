@@ -5,7 +5,7 @@
     state: directory
     owner: web
     group: web
-    mode: '0755'
+    mode: 0755
 
 - name: Installation of the website page
   ansible.builtin.file:
@@ -13,15 +13,15 @@
     dest: /srv/website
     owner: web
     group: web
-    mode: '2750'
+    mode: 2750
 
 - name: Installation of the website
-  ansible.builtin.template:
-    src: ../templates/website.j2
-    dest: /etc/nginx/sites-available/website
+  ansible.builtin.copy:
+    src: website
+    dest: /etc/nginx/sites-available/
     owner: root
     group: root
-    mode: "0644"
+    mode: 0644
   notify: Reload nginx
 
 - name: Activation of the website

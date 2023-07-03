@@ -16,8 +16,8 @@
 
 - name: Installation of the gitlab.rc config
   ansible.builtin.template:
-    src: ../templates/gitlab.rb.j2
-    dest: /etc/gitlab/gitlab.rb
+    src: gitlab.rb
+    dest: /etc/gitlab/
     owner: root
     group: root
     mode: "0600"
@@ -32,18 +32,18 @@
     state: directory
 
 - name: Installation of GitLab TLS certificate
-  ansible.builtin.template:
-    src: ../secrets/gitlab.exo-industries.xyz.crt
-    dest: /etc/gitlab/ssl/gitlab.exo-industries.xyz.crt
+  ansible.builtin.copy:
+    src: gitlab.exo-industries.xyz.crt
+    dest: /etc/gitlab/ssl/
     owner: root
     group: root
     mode: "0644"
   notify: Restart gitlab
 
 - name: Installation of GitLab TLS key
-  ansible.builtin.template:
-    src: ../secrets/gitlab.exo-industries.xyz.key
-    dest: /etc/gitlab/ssl/gitlab.exo-industries.xyz.key
+  ansible.builtin.copy:
+    src: gitlab.exo-industries.xyz.key
+    dest: /etc/gitlab/ssl/
     owner: root
     group: root
     mode: "0640"

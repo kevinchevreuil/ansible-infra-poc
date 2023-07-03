@@ -22,18 +22,18 @@
     state: started
     enabled: true
 
-- name: Install the rsyslog server template
-  ansible.builtin.template:
-    src: ../templates/rsyslog.conf.j2
-    dest: /etc/rsyslog.conf
+- name: Install the rsyslog server file
+  ansible.builtin.copy:
+    src: rsyslog.conf
+    dest: /etc/
     owner: root
     group: root
     mode: 0644
   notify: Restart rsyslog
 
 - name: Install the CA certificate
-  ansible.builtin.template:
-    src: ../secrets/ca.crt
+  ansible.builtin.copy:
+    src: ca.crt
     dest: /etc/ssl/certs
     owner: root
     group: root
@@ -41,8 +41,8 @@
   notify: Restart rsyslog
 
 - name: Install the rsyslog server certificate
-  ansible.builtin.template:
-    src: ../secrets/rsyslog.exo-industries.xyz.crt
+  ansible.builtin.copy:
+    src: rsyslog.exo-industries.xyz.crt
     dest: /etc/ssl/certs
     owner: root
     group: root
@@ -50,8 +50,8 @@
   notify: Restart rsyslog
 
 - name: Install the rsyslog certificate key
-  ansible.builtin.template:
-    src: ../secrets/rsyslog.exo-industries.xyz.key
+  ansible.builtin.copy:
+    src: rsyslog.exo-industries.xyz.key
     dest: /etc/ssl/private
     owner: root
     group: root
@@ -59,9 +59,9 @@
   notify: Restart rsyslog
 
 - name: Application of the resolv.conf file
-  ansible.builtin.template:
-    src: ../templates/resolv.conf.j2
-    dest: /etc/resolv.conf
+  ansible.builtin.copy:
+    src: resolv.conf
+    dest: /etc/
     owner: root
     group: root
-    mode: '0644'
+    mode: 0644

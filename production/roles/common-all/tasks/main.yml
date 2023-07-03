@@ -86,6 +86,7 @@
     owner: root
     group: root
     mode: '0644'
+  notify: Restart ssh
 
 - name: Import all tasks
   import_tasks: hardening.yml

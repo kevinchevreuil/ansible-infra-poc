@@ -36,9 +36,9 @@
     enabled: true
 
 - name: Installation of the glpi configuration
-  ansible.builtin.template:
-    src: ../templates/glpi.j2
-    dest: /etc/nginx/sites-available/glpi
+  ansible.builtin.copy:
+    src: glpi
+    dest: /etc/nginx/sites-available/
     owner: root
     group: root
     mode: "0644"
@@ -55,8 +55,8 @@
 
 - name: Add the TLS cert for GLPI
   ansible.builtin.copy:
-    src: ../secrets/glpi.exo-industries.xyz.crt
-    dest: /etc/ssl/certs/glpi.exo-industries.xyz.crt
+    src: glpi.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/
     owner: root
     group: root
     mode: "0640"
@@ -65,8 +65,8 @@
 
 - name: Add the TLS key for GLPI
   ansible.builtin.copy:
-    src: ../secrets/glpi.exo-industries.xyz.key
-    dest: /etc/ssl/private/glpi.exo-industries.xyz.key
+    src: glpi.exo-industries.xyz.key
+    dest: /etc/ssl/private/
     owner: root
     group: root
     mode: "0600"
