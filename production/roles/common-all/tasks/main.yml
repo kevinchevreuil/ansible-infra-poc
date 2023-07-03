@@ -78,7 +78,7 @@
 
 - name: Application of the SSH conffile
   ansible.builtin.template:
-    src: sshd_config.j2
+    src: sshd_config
     dest: /etc/ssh/
     owner: root
     group: root
