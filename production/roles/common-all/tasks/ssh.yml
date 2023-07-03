@@ -1,14 +1,14 @@
 ---
 - name: "Check port {{ ansible_port }}"
-      wait_for:
-        port: "{{ ansible_port }}"
-        state: "started"
-        host: "{{ inventory_hostname }}"
-        connect_timeout: "5"
-        timeout: "5"
-      delegate_to: "localhost"
-      ignore_errors: "yes"
-      register: ssh_port
+  wait_for:
+    port: "{{ ansible_port }}"
+    state: "started"
+    host: "{{ inventory_hostname }}"
+    connect_timeout: "5"
+    timeout: "5"
+  delegate_to: "localhost"
+  ignore_errors: "yes"
+  register: ssh_port
 
 
 - name: "Check port 22"
