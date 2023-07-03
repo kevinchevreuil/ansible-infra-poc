@@ -1,4 +1,7 @@
 ---
+- name: Import the SSH tasks
+  import_tasks: ssh.yml
+
 - name: Install default packages
   ansible.builtin.apt:
     pkg:
