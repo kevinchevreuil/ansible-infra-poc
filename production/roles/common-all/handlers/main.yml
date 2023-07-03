@@ -5,6 +5,12 @@
     state: restarted
     enabled: true
 
+- name: Restart ssh
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+    enabled: true
+
 - name: GRUB update
   ansible.builtin.command: grub-mkconfig -o /boot/grub/grub.cfg
 
