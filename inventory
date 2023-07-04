@@ -31,3 +31,6 @@
 
 [reverse_proxy]
 192.168.10.240
+
+[reverse_proxy_docker]
+192.168.10.196

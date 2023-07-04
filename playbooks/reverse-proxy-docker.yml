@@ -1,0 +1,4 @@
+- hosts: reverse_proxy_docker
+  gather_facts: no
+  roles:
+    - reverse-proxy-docker
