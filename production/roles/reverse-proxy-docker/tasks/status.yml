@@ -1,0 +1,36 @@
+---
+- name: Installation of the status configuration
+  ansible.builtin.copy:
+    src: status
+    dest: /etc/nginx/sites-available/
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Activation of the status website
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/status
+    dest: /etc/nginx/sites-enabled/status
+    owner: root
+    group: root
+    state: link
+  notify: Reload nginx
+
+- name: Add the TLS cert for status
+  ansible.builtin.copy:
+    src: status.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart nginx
+
+- name: Add the TLS key for status
+  ansible.builtin.copy:
+    src: status.exo-industries.xyz.key
+    dest: /etc/ssl/private/
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Restart nginx

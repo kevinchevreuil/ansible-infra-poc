@@ -12,8 +12,11 @@ $TTL	604800
 202	IN	PTR	dhcp-master.
 203	IN	PTR	dhcp-slave.
 204	IN	PTR	rsyslog.
-205	IN	PTR	prometheus.
-205	IN	PTR	grafana.
 206	IN	PTR	capen-ssl.
 207	IN	PTR	glpi.
 208	IN	PTR	gitlab.
+196	IN	PTR	netbox.
+196	IN	PTR	pmonit.
+196	IN	PTR	status.
+196     IN      PTR     prometheus.
+196     IN      PTR     grafana.

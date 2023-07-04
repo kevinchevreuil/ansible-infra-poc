@@ -1,0 +1,36 @@
+---
+- name: Installation of the netbox configuration
+  ansible.builtin.copy:
+    src: netbox
+    dest: /etc/nginx/sites-available/
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Activation of the netbox website
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/netbox
+    dest: /etc/nginx/sites-enabled/netbox
+    owner: root
+    group: root
+    state: link
+  notify: Reload nginx
+
+- name: Add the TLS cert for netbox
+  ansible.builtin.copy:
+    src: netbox.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart nginx
+
+- name: Add the TLS key for netbox
+  ansible.builtin.copy:
+    src: netbox.exo-industries.xyz.key
+    dest: /etc/ssl/private/
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Restart nginx

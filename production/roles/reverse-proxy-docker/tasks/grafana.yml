@@ -1,0 +1,36 @@
+---
+- name: Installation of the grafana configuration
+  ansible.builtin.copy:
+    src: grafana
+    dest: /etc/nginx/sites-available/
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Activation of the grafana website
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/grafana
+    dest: /etc/nginx/sites-enabled/grafana
+    owner: root
+    group: root
+    state: link
+  notify: Reload nginx
+
+- name: Add the TLS cert for grafana
+  ansible.builtin.copy:
+    src: grafana.exo-industries.xyz.crt
+    dest: /etc/ssl/certs/
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart nginx
+
+- name: Add the TLS key for grafana
+  ansible.builtin.copy:
+    src: grafana.exo-industries.xyz.key
+    dest: /etc/ssl/private/
+    owner: root
+    group: root
+    mode: "0600"
+  notify: Restart nginx

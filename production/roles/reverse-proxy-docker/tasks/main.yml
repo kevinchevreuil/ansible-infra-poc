@@ -1,0 +1,15 @@
+---
+- name: Import netbox tasks
+  import_tasks: netbox.yml
+
+- name: Import prometheus tasks
+  import_tasks: prometheus.yml
+
+- name: Import status tasks
+  import_tasks: status.yml
+
+- name: Import grafana tasks
+  import_tasks: grafana.yml
+
+- name: Import pmonit tasks
+  import_tasks: pmonit.yml
