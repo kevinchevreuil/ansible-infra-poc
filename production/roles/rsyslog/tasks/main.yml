@@ -1,4 +1,8 @@
 ---
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ role_name }}"
+
 - name: Install the rsyslog configuration
   ansible.builtin.apt:
     pkg:

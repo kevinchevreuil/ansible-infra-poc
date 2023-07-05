@@ -1,4 +1,8 @@
 ---
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ role_name }}"
+
 - name: Download the GLPI latest release
   ansible.builtin.get_url:
     url: https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz

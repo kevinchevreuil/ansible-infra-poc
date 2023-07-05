@@ -1,4 +1,8 @@
 ---
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ role_name }}"
+
 - name: Download Zabbix {{ zabbix_version }} version
   ansible.builtin.get_url:
     url: https://repo.zabbix.com/zabbix/{{ zabbix_version }}/debian/pool/main/z/zabbix-release/zabbix-release_{{ zabbix_version }}-1+debian12_all.deb
