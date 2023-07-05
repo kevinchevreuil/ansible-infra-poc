@@ -4,6 +4,7 @@
 
 - name: Install default packages
   ansible.builtin.apt:
+    update_cache: true
     pkg:
     - rsyslog
     - rsyslog-openssl
