@@ -4,8 +4,8 @@
     port: "22"
     state: "started"
     host: "{{ inventory_hostname }}"
-    connect_timeout: "3"
-    timeout: "3"
+    connect_timeout: "5"
+    timeout: "5"
   delegate_to: "localhost"
   ignore_errors: "yes"
   register: ssh_port
