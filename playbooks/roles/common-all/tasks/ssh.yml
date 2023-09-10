@@ -1,4 +1,8 @@
 ---
+- name: Show the host
+  debug:
+    msg: "The host is {{ inventory_hostname }}"
+
 - name: "Check port 22"
   wait_for:
     port: "22"
